@@ -718,70 +718,156 @@ function openJourneyPopup(personaType) {
       </p>
     </div>
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-2xl); margin-bottom: var(--space-3xl);">
+    <div style="position: relative; padding: var(--space-3xl) 0;">
   `;
   
   journey.stages.forEach((stage, index) => {
+    const isLast = index === journey.stages.length - 1;
+    
+    // Stage node
     html += `
-      <div style="border: 3px solid var(--swiss-black); background: var(--swiss-gray-50);">
-        <div style="background: ${journey.color}; color: var(--swiss-white); padding: var(--space-xl); border-bottom: 3px solid var(--swiss-black);">
-          <div style="font-size: 2.5rem; text-align: center; margin-bottom: var(--space-sm);">${stage.emoji}</div>
-          <div class="font-mono text-xs text-center" style="opacity: 0.9; margin-bottom: 8px;">STAGE ${index + 1}</div>
-          <h4 class="font-bold text-xl text-center">${stage.title}</h4>
+      <div style="position: relative; margin-bottom: ${isLast ? '0' : 'var(--space-4xl)'};">
+        
+        {# Stage Header #}
+        <div style="display: flex; align-items: center; gap: var(--space-lg); margin-bottom: var(--space-xl);">
+          <div style="flex-shrink: 0; width: 80px; height: 80px; background: ${journey.color}; border: 3px solid var(--swiss-black); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+            ${stage.emoji}
+          </div>
+          <div style="flex: 1;">
+            <div class="font-mono text-xs font-bold" style="color: var(--swiss-gray-600); margin-bottom: 4px;">STAGE ${index + 1}</div>
+            <h4 class="font-bold text-2xl" style="color: var(--swiss-black);">${stage.title}</h4>
+          </div>
         </div>
         
-        <div style="padding: var(--space-xl);">
-          <div style="margin-bottom: var(--space-lg);">
-            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">✓ Actions</h5>
+        {# Journey Content #}
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-xl); margin-left: 95px; padding: var(--space-xl); background: var(--swiss-gray-50); border: 2px solid var(--swiss-black);">
+          
+          {# Actions Column #}
+          <div>
+            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">Actions</h5>
             <ul style="list-style: none; padding: 0; margin: 0;">
               ${stage.actions.map(action => `
-                <li style="padding: 8px 0 8px 12px; border-left: 2px solid var(--swiss-black); margin-bottom: 8px; font-size: 0.85rem; color: var(--swiss-gray-800);">
+                <li style="padding: 6px 0 6px 10px; border-left: 2px solid var(--swiss-black); margin-bottom: 6px; font-size: 0.85rem; color: var(--swiss-gray-800);">
                   ${action}
                 </li>
               `).join('')}
             </ul>
           </div>
           
-          <div style="margin-bottom: var(--space-lg);">
-            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">💭 Thoughts</h5>
-            <ul style="list-style: none; padding: 0; margin: 0;">
+          {# Thoughts & Emotions Column #}
+          <div>
+            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">Thoughts & Feelings</h5>
+            <div style="margin-bottom: var(--space-md);">
               ${stage.thoughts.map(thought => `
-                <li style="padding: 8px 0 8px 12px; border-left: 2px solid var(--swiss-gray-400); margin-bottom: 8px; font-size: 0.85rem; color: var(--swiss-gray-700); font-style: italic;">
+                <p style="font-size: 0.85rem; color: var(--swiss-gray-700); font-style: italic; margin-bottom: 8px; padding-left: 10px; border-left: 2px solid var(--swiss-gray-400);">
                   "${thought}"
-                </li>
+                </p>
               `).join('')}
-            </ul>
-          </div>
-          
-          <div style="margin-bottom: var(--space-lg);">
-            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">😊 Emotions</h5>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            </div>
+            <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: var(--space-sm);">
               ${stage.emotions.map(emotion => `
-                <span style="padding: 4px 10px; background: var(--swiss-white); border: 2px solid var(--swiss-black); font-size: 0.75rem; font-weight: 600; font-family: var(--font-mono);">
+                <span style="padding: 3px 8px; background: var(--swiss-white); border: 1px solid var(--swiss-black); font-size: 0.7rem; font-weight: 600; font-family: var(--font-mono);">
                   ${emotion}
                 </span>
               `).join('')}
             </div>
           </div>
           
-          <div style="margin-bottom: var(--space-lg);">
-            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">📍 Touchpoints</h5>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              ${stage.touchpoints.map(touchpoint => `
-                <span style="padding: 4px 10px; background: var(--swiss-black); color: var(--swiss-white); font-size: 0.75rem; font-family: var(--font-mono);">
-                  ${touchpoint}
-                </span>
+          {# Pain Points Column #}
+          <div>
+            <h5 class="font-mono font-bold text-xs uppercase mb-3" style="color: var(--swiss-red);">Pain Points</h5>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              ${stage.opportunities.map(opp => `
+                <li style="padding: 6px 0 6px 10px; border-left: 2px solid var(--swiss-red); margin-bottom: 6px; font-size: 0.85rem; color: var(--swiss-gray-800);">
+                  ⚠️ ${opp}
+                </li>
               `).join('')}
-            </div>
-          </div>
-          
-          <div style="background: var(--swiss-white); padding: var(--space-md); border: 2px solid var(--swiss-red); border-left-width: 4px;">
-            <h5 class="font-mono font-bold text-xs uppercase mb-2" style="color: var(--swiss-red);">💡 Opportunities</h5>
-            <ul style="list-style: disc; padding-left: 20px; margin: 0; color: var(--swiss-gray-700); font-size: 0.85rem;">
-              ${stage.opportunities.map(opp => `<li style="margin-bottom: 4px;">${opp}</li>`).join('')}
             </ul>
           </div>
+          
         </div>
+        
+        {# Design Gallery Intervention Points #}
+        ${stage.touchpoints.length > 0 ? `
+          <div style="margin-left: 95px; margin-top: var(--space-lg); padding: var(--space-lg); background: ${journey.color}; border: 3px solid var(--swiss-black);">
+            <div style="display: flex; align-items: center; gap: var(--space-md); color: var(--swiss-white);">
+              <div style="flex-shrink: 0; font-size: 1.5rem;">🎯</div>
+              <div style="flex: 1;">
+                <h5 class="font-mono font-bold text-xs uppercase mb-2" style="opacity: 0.9;">Design Gallery Resources</h5>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  ${stage.touchpoints.map(touchpoint => {
+                    const linkMap = {
+                      'Homepage': '/',
+                      'Style Gallery': '/blog/',
+                      'Gallery': '/blog/',
+                      'Gallery Browse': '/blog/',
+                      'About Page': '/about/',
+                      'Who Is This For page': '/who-is-this-for/',
+                      'Submission Guidelines': '/submit-style-guide/',
+                      'Submit Form': '/submit-style-guide/',
+                      'Submit Page': '/submit-style-guide/',
+                      'Confirmation Email': '/track-submission/',
+                      'Track Submission': '/track-submission/',
+                      'Track Submission page': '/track-submission/',
+                      'Approval Email': '/track-submission/',
+                      'Live Gallery Page': '/blog/',
+                      'Gallery filtered by students': '/blog/',
+                      'Category Filters': '/blog/',
+                      'Gallery Details': '/blog/',
+                      'Style Guide Details': '/blog/',
+                      'Contact Form': '/contact/',
+                      'Contact': '/contact/',
+                      'Google Search': '/',
+                      'Gallery Search': '/blog/',
+                      'Featured Examples': '/blog/',
+                      'Documentation Examples': '/blog/',
+                      'Component Breakdowns': '/blog/',
+                      'Referenced Style Guides': '/blog/',
+                      'Best Practices': '/blog/',
+                      'Documentation Standards': '/blog/',
+                      'Detailed Documentation': '/blog/',
+                      'Component Libraries': '/blog/',
+                      'Success Stories': '/blog/',
+                      'Success Story': '/blog/',
+                      'Public Gallery Link': '/blog/',
+                      'Professional Profile': '/about/',
+                      'Professional Use': '/blog/',
+                      'Category Compare': '/blog/',
+                      'Success Metrics': '/blog/',
+                      'Exported References': '/blog/',
+                      'Frequent Visits': '/blog/',
+                      'Referrals': '/about/',
+                      'Social Sharing': '/blog/',
+                      'Repeat Visits': '/blog/',
+                      'Guidelines': '/submit-style-guide/',
+                      'Institution Partnerships': '/contact/',
+                      'Community': '/about/',
+                      'Shared Gallery Links': '/blog/',
+                      'Team Access': '/blog/'
+                    };
+                    const url = linkMap[touchpoint] || '/';
+                    return `
+                      <a href="${url}" style="padding: 6px 12px; background: var(--swiss-white); color: var(--swiss-black); font-size: 0.8rem; font-weight: 600; border: 2px solid var(--swiss-black); text-decoration: none; display: inline-block; transition: all 0.2s ease;" 
+                         onmouseover="this.style.background='var(--swiss-black)'; this.style.color='var(--swiss-white)';" 
+                         onmouseout="this.style.background='var(--swiss-white)'; this.style.color='var(--swiss-black)';">
+                        ${touchpoint} →
+                      </a>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+        
+        {# Arrow to next stage #}
+        ${!isLast ? `
+          <div style="margin-left: 40px; margin-top: var(--space-lg); margin-bottom: var(--space-lg); display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 3px; height: 40px; background: var(--swiss-black);"></div>
+            <div style="width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid var(--swiss-black);"></div>
+          </div>
+        ` : ''}
+        
       </div>
     `;
   });
