@@ -1,0 +1,428 @@
+---
+layout: layouts/base.njk
+title: Reviewer Portal
+description: Review and approve style guide submissions for the Design Gallery
+permalink: /reviewer-portal/
+robots: noindex, nofollow
+---
+
+<section class="swiss-section" style="background-color: var(--swiss-white); padding-top: var(--space-3xl);">
+  <div class="swiss-container">
+    <div class="swiss-grid">
+      
+      {# Header #}
+      <div class="swiss-col-12" style="margin-bottom: var(--space-3xl);">
+        <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-600); margin-bottom: var(--space-lg); letter-spacing: 0.2em;">
+          INTERNAL PORTAL
+        </p>
+        <h1 class="font-black" style="font-size: var(--fluid-h1); margin-bottom: var(--space-lg); letter-spacing: -0.02em; line-height: 1.1;">
+          Reviewer Portal
+        </h1>
+        <div style="width: 80px; height: 3px; background-color: var(--swiss-red); margin-bottom: var(--space-2xl);"></div>
+        <p class="text-xl leading-relaxed" style="color: var(--swiss-gray-700); max-width: 800px;">
+          Review, evaluate, and manage style guide submissions for the Design Gallery.
+        </p>
+      </div>
+
+      {# Login Section (shown if not authenticated) #}
+      <div id="loginSection" class="swiss-col-12" style="margin-bottom: var(--space-4xl);">
+        <div style="max-width: 500px; margin: 0 auto; background: var(--swiss-gray-50); padding: var(--space-3xl); border: 2px solid var(--swiss-black);">
+          <h2 class="font-bold text-2xl mb-6 text-center" style="color: var(--swiss-black);">Reviewer Authentication</h2>
+          
+          <form id="loginForm">
+            <div style="margin-bottom: var(--space-xl);">
+              <label for="reviewerEmail" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
+                Email
+              </label>
+              <input 
+                type="email" 
+                id="reviewerEmail" 
+                required
+                class="w-full p-3 border-2 border-black font-mono"
+                style="background: var(--swiss-white);"
+              >
+            </div>
+
+            <div style="margin-bottom: var(--space-xl);">
+              <label for="reviewerPassword" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
+                Password
+              </label>
+              <input 
+                type="password" 
+                id="reviewerPassword" 
+                required
+                class="w-full p-3 border-2 border-black font-mono"
+                style="background: var(--swiss-white);"
+              >
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full font-mono font-bold uppercase text-sm px-8 py-4 border-2 border-black transition-colors"
+              style="background: var(--swiss-black); color: var(--swiss-white);"
+            >
+              Login to Portal →
+            </button>
+
+            <p class="text-sm mt-4 text-center" style="color: var(--swiss-gray-600);">
+              Demo: Use <strong>reviewer@demo.com</strong> / <strong>demo123</strong>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      {# Dashboard Section (shown after authentication) #}
+      <div id="dashboardSection" style="display: none;">
+        
+        {# Stats Overview #}
+        <div class="swiss-col-12" style="margin-bottom: var(--space-3xl);">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-xl); text-align: center;">
+              <div class="text-4xl font-black mb-2" style="color: var(--swiss-red);" id="pendingCount">8</div>
+              <div class="font-mono text-sm uppercase" style="color: var(--swiss-gray-600);">Pending Review</div>
+            </div>
+            <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-xl); text-align: center;">
+              <div class="text-4xl font-black mb-2" style="color: var(--swiss-black);" id="approvedCount">24</div>
+              <div class="font-mono text-sm uppercase" style="color: var(--swiss-gray-600);">Approved</div>
+            </div>
+            <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-xl); text-align: center;">
+              <div class="text-4xl font-black mb-2" style="color: var(--swiss-gray-700);" id="changesCount">3</div>
+              <div class="font-mono text-sm uppercase" style="color: var(--swiss-gray-600);">Changes Requested</div>
+            </div>
+            <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-xl); text-align: center;">
+              <div class="text-4xl font-black mb-2" style="color: var(--swiss-black);" id="totalCount">35</div>
+              <div class="font-mono text-sm uppercase" style="color: var(--swiss-gray-600);">Total Submissions</div>
+            </div>
+          </div>
+        </div>
+
+        {# Filter Bar #}
+        <div class="swiss-col-12" style="margin-bottom: var(--space-2xl);">
+          <div style="background: var(--swiss-gray-50); padding: var(--space-lg); border: 2px solid var(--swiss-black); display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: center;">
+            <label class="font-mono font-bold text-sm uppercase" style="color: var(--swiss-black);">Filter:</label>
+            <button class="filter-btn active" data-status="pending" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--swiss-black); background: var(--swiss-black); color: var(--swiss-white); font-mono text-sm font-bold uppercase;">
+              Pending
+            </button>
+            <button class="filter-btn" data-status="approved" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--swiss-black); background: var(--swiss-white); color: var(--swiss-black); font-mono text-sm font-bold uppercase;">
+              Approved
+            </button>
+            <button class="filter-btn" data-status="changes" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--swiss-black); background: var(--swiss-white); color: var(--swiss-black); font-mono text-sm font-bold uppercase;">
+              Changes Requested
+            </button>
+            <button class="filter-btn" data-status="all" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--swiss-black); background: var(--swiss-white); color: var(--swiss-black); font-mono text-sm font-bold uppercase;">
+              All
+            </button>
+          </div>
+        </div>
+
+        {# Submissions List #}
+        <div class="swiss-col-12" style="margin-bottom: var(--space-4xl);">
+          <div id="submissionsList"></div>
+        </div>
+
+        {# Review Modal #}
+        <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; padding: var(--space-2xl); overflow-y: auto;">
+          <div style="max-width: 900px; margin: 0 auto; background: var(--swiss-white); border: 3px solid var(--swiss-black); padding: var(--space-3xl); position: relative;">
+            <button id="closeModal" style="position: absolute; top: var(--space-lg); right: var(--space-lg); background: var(--swiss-black); color: var(--swiss-white); border: none; width: 40px; height: 40px; font-size: 24px; cursor: pointer; font-weight: bold;">×</button>
+            
+            <div id="reviewModalContent"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+// Demo data
+const mockSubmissions = [
+  {
+    id: 1,
+    submitterName: "Sarah Johnson",
+    submitterEmail: "sarah@example.com",
+    submitterRole: "designer",
+    styleGuideName: "Nordic Minimalism Design System",
+    styleGuideUrl: "https://example.com/nordic-ds",
+    category: "minimalist",
+    description: "A comprehensive design system inspired by Scandinavian minimalism, featuring clean lines, ample whitespace, and a muted color palette. Perfect for modern web applications that prioritize clarity and user experience.",
+    technologies: "React, TypeScript, Styled Components",
+    liveExampleUrl: "https://example.com/demo",
+    license: "open-source",
+    status: "pending",
+    submittedDate: "2025-12-08",
+    additionalNotes: "This system has been used in production for 6 months with great success."
+  },
+  {
+    id: 2,
+    submitterName: "Marcus Chen",
+    submitterEmail: "marcus@example.com",
+    submitterRole: "developer",
+    styleGuideName: "Bold Brutalist UI Kit",
+    styleGuideUrl: "https://example.com/brutalist",
+    category: "brutalism",
+    description: "Raw, unpolished design system embracing brutalist aesthetics with bold typography, stark contrasts, and unconventional layouts. Challenges traditional design conventions while maintaining usability.",
+    technologies: "Vue.js, Tailwind CSS, Figma",
+    liveExampleUrl: "https://example.com/brutal-demo",
+    license: "creative-commons",
+    status: "pending",
+    submittedDate: "2025-12-07"
+  },
+  {
+    id: 3,
+    submitterName: "Emily Rodriguez",
+    submitterEmail: "emily@corp.com",
+    submitterRole: "design-lead",
+    styleGuideName: "Enterprise SaaS Design Language",
+    styleGuideUrl: "https://example.com/enterprise-ds",
+    category: "corporate",
+    description: "Professional design system built for B2B SaaS applications with comprehensive component library, accessibility features, and detailed documentation for enterprise-scale implementations.",
+    technologies: "Angular, SCSS, Storybook",
+    liveExampleUrl: "",
+    license: "proprietary-showcase",
+    status: "approved",
+    submittedDate: "2025-12-05",
+    reviewedDate: "2025-12-06",
+    reviewNotes: "Excellent documentation and comprehensive component coverage."
+  }
+];
+
+let currentFilter = 'pending';
+
+document.addEventListener('DOMContentLoaded', function() {
+  const loginForm = document.getElementById('loginForm');
+  const loginSection = document.getElementById('loginSection');
+  const dashboardSection = document.getElementById('dashboardSection');
+  const reviewModal = document.getElementById('reviewModal');
+  const closeModal = document.getElementById('closeModal');
+
+  // Handle login
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('reviewerEmail').value;
+    const password = document.getElementById('reviewerPassword').value;
+    
+    // Demo authentication
+    if (email === 'reviewer@demo.com' && password === 'demo123') {
+      loginSection.style.display = 'none';
+      dashboardSection.style.display = 'block';
+      renderSubmissions(currentFilter);
+    } else {
+      alert('Invalid credentials. Use reviewer@demo.com / demo123');
+    }
+  });
+
+  // Filter buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('filter-btn')) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'var(--swiss-white)';
+        btn.style.color = 'var(--swiss-black)';
+      });
+      e.target.classList.add('active');
+      e.target.style.background = 'var(--swiss-black)';
+      e.target.style.color = 'var(--swiss-white)';
+      currentFilter = e.target.dataset.status;
+      renderSubmissions(currentFilter);
+    }
+  });
+
+  // Close modal
+  closeModal.addEventListener('click', function() {
+    reviewModal.style.display = 'none';
+  });
+
+  // Close modal on outside click
+  reviewModal.addEventListener('click', function(e) {
+    if (e.target === reviewModal) {
+      reviewModal.style.display = 'none';
+    }
+  });
+});
+
+function renderSubmissions(filter) {
+  const listContainer = document.getElementById('submissionsList');
+  const filtered = filter === 'all' 
+    ? mockSubmissions 
+    : mockSubmissions.filter(s => s.status === filter);
+
+  if (filtered.length === 0) {
+    listContainer.innerHTML = `
+      <div style="text-align: center; padding: var(--space-4xl); background: var(--swiss-gray-50); border: 2px solid var(--swiss-black);">
+        <p class="font-mono text-lg" style="color: var(--swiss-gray-600);">No submissions found for this filter.</p>
+      </div>
+    `;
+    return;
+  }
+
+  listContainer.innerHTML = filtered.map(submission => {
+    const statusColor = submission.status === 'approved' ? 'var(--swiss-black)' : 
+                       submission.status === 'changes' ? 'var(--swiss-gray-700)' : 
+                       'var(--swiss-red)';
+    const statusLabel = submission.status === 'approved' ? 'Approved' :
+                       submission.status === 'changes' ? 'Changes Requested' :
+                       'Pending Review';
+
+    return `
+      <div class="submission-card" style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-2xl); margin-bottom: var(--space-lg); cursor: pointer; transition: all 0.2s;" 
+           onmouseover="this.style.borderColor='var(--swiss-red)';" 
+           onmouseout="this.style.borderColor='var(--swiss-black)';"
+           onclick="openReviewModal(${submission.id})">
+        
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+          <div>
+            <h3 class="font-bold text-xl mb-2" style="color: var(--swiss-black);">${submission.styleGuideName}</h3>
+            <p class="font-mono text-sm" style="color: var(--swiss-gray-600);">
+              by ${submission.submitterName} • ${submission.submittedDate}
+            </p>
+          </div>
+          <div style="padding: var(--space-sm) var(--space-md); background: ${statusColor}; color: var(--swiss-white); font-mono text-xs font-bold uppercase;">
+            ${statusLabel}
+          </div>
+        </div>
+
+        <p class="text-sm mb-4" style="color: var(--swiss-gray-700);">${submission.description.substring(0, 150)}...</p>
+
+        <div style="display: flex; gap: var(--space-lg); flex-wrap: wrap; font-mono text-xs; color: var(--swiss-gray-600);">
+          <div><strong>Category:</strong> ${submission.category}</div>
+          <div><strong>License:</strong> ${submission.license}</div>
+          <div><strong>Tech:</strong> ${submission.technologies}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openReviewModal(submissionId) {
+  const submission = mockSubmissions.find(s => s.id === submissionId);
+  const modal = document.getElementById('reviewModal');
+  const content = document.getElementById('reviewModalContent');
+
+  content.innerHTML = `
+    <h2 class="font-bold text-3xl mb-6" style="color: var(--swiss-black);">Review Submission</h2>
+    
+    <div style="margin-bottom: var(--space-2xl);">
+      <h3 class="font-bold text-2xl mb-3" style="color: var(--swiss-black);">${submission.styleGuideName}</h3>
+      <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+        <div><strong>Submitter:</strong> ${submission.submitterName}</div>
+        <div><strong>Email:</strong> ${submission.submitterEmail}</div>
+        <div><strong>Role:</strong> ${submission.submitterRole}</div>
+        <div><strong>Category:</strong> ${submission.category}</div>
+        <div><strong>Submitted:</strong> ${submission.submittedDate}</div>
+        <div><strong>License:</strong> ${submission.license}</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: var(--space-2xl); padding: var(--space-lg); background: var(--swiss-gray-50); border-left: 4px solid var(--swiss-red);">
+      <h4 class="font-bold mb-2">Description</h4>
+      <p class="text-sm" style="color: var(--swiss-gray-700);">${submission.description}</p>
+    </div>
+
+    <div style="margin-bottom: var(--space-2xl);">
+      <h4 class="font-bold mb-2">Links</h4>
+      <div class="text-sm">
+        <p><strong>Style Guide URL:</strong> <a href="${submission.styleGuideUrl}" target="_blank" style="color: var(--swiss-red); text-decoration: underline;">${submission.styleGuideUrl}</a></p>
+        ${submission.liveExampleUrl ? `<p><strong>Live Example:</strong> <a href="${submission.liveExampleUrl}" target="_blank" style="color: var(--swiss-red); text-decoration: underline;">${submission.liveExampleUrl}</a></p>` : ''}
+      </div>
+    </div>
+
+    <div style="margin-bottom: var(--space-2xl);">
+      <h4 class="font-bold mb-2">Technologies</h4>
+      <p class="text-sm">${submission.technologies}</p>
+    </div>
+
+    ${submission.additionalNotes ? `
+      <div style="margin-bottom: var(--space-2xl);">
+        <h4 class="font-bold mb-2">Additional Notes</h4>
+        <p class="text-sm" style="color: var(--swiss-gray-700);">${submission.additionalNotes}</p>
+      </div>
+    ` : ''}
+
+    <div style="border-top: 2px solid var(--swiss-black); padding-top: var(--space-2xl); margin-top: var(--space-2xl);">
+      <h4 class="font-bold mb-4">Review Actions</h4>
+      
+      <div style="margin-bottom: var(--space-xl);">
+        <label class="block font-mono font-bold text-sm uppercase mb-2">Review Notes</label>
+        <textarea id="reviewNotes" rows="4" class="w-full p-3 border-2 border-black font-mono" style="background: var(--swiss-white);" placeholder="Add your review comments here..."></textarea>
+      </div>
+
+      <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+        <button onclick="approveSubmission(${submission.id})" class="font-mono font-bold uppercase text-sm px-6 py-3 border-2 border-black" style="background: var(--swiss-black); color: var(--swiss-white);">
+          ✓ Approve
+        </button>
+        <button onclick="requestChanges(${submission.id})" class="font-mono font-bold uppercase text-sm px-6 py-3 border-2 border-black" style="background: var(--swiss-white); color: var(--swiss-black);">
+          Request Changes
+        </button>
+        <button onclick="rejectSubmission(${submission.id})" class="font-mono font-bold uppercase text-sm px-6 py-3 border-2 border-black" style="background: var(--swiss-white); color: var(--swiss-black);">
+          Reject
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.style.display = 'block';
+}
+
+function approveSubmission(id) {
+  const notes = document.getElementById('reviewNotes').value;
+  console.log('Approving submission:', id, 'Notes:', notes);
+  alert('Submission approved! An email notification will be sent to the submitter.');
+  document.getElementById('reviewModal').style.display = 'none';
+  
+  // Update mock data
+  const submission = mockSubmissions.find(s => s.id === id);
+  if (submission) {
+    submission.status = 'approved';
+    submission.reviewNotes = notes;
+    submission.reviewedDate = new Date().toISOString().split('T')[0];
+  }
+  renderSubmissions(currentFilter);
+}
+
+function requestChanges(id) {
+  const notes = document.getElementById('reviewNotes').value;
+  if (!notes.trim()) {
+    alert('Please provide feedback about what changes are needed.');
+    return;
+  }
+  console.log('Requesting changes for:', id, 'Notes:', notes);
+  alert('Change request sent! The submitter will be notified via email.');
+  document.getElementById('reviewModal').style.display = 'none';
+  
+  const submission = mockSubmissions.find(s => s.id === id);
+  if (submission) {
+    submission.status = 'changes';
+    submission.reviewNotes = notes;
+  }
+  renderSubmissions(currentFilter);
+}
+
+function rejectSubmission(id) {
+  const notes = document.getElementById('reviewNotes').value;
+  if (!notes.trim()) {
+    alert('Please provide a reason for rejection.');
+    return;
+  }
+  if (confirm('Are you sure you want to reject this submission?')) {
+    console.log('Rejecting submission:', id, 'Notes:', notes);
+    alert('Submission rejected. The submitter will be notified.');
+    document.getElementById('reviewModal').style.display = 'none';
+  }
+}
+</script>
+
+<style>
+.filter-btn {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  opacity: 0.8;
+}
+
+.submission-card {
+  transition: all 0.2s ease;
+}
+</style>

@@ -1,0 +1,301 @@
+---
+layout: layouts/base.njk
+title: Track Your Submission
+description: Check the status of your style guide submission
+permalink: /track-submission/
+---
+
+<section class="swiss-section" style="background-color: var(--swiss-white); padding-top: var(--space-3xl);">
+  <div class="swiss-container">
+    <div class="swiss-grid">
+      
+      {# Header #}
+      <div class="swiss-col-12" style="margin-bottom: var(--space-3xl);">
+        <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-600); margin-bottom: var(--space-lg); letter-spacing: 0.2em;">
+          SUBMISSION TRACKING
+        </p>
+        <h1 class="font-black" style="font-size: var(--fluid-h1); margin-bottom: var(--space-lg); letter-spacing: -0.02em; line-height: 1.1;">
+          Track Your Submission
+        </h1>
+        <div style="width: 80px; height: 3px; background-color: var(--swiss-red); margin-bottom: var(--space-2xl);"></div>
+        <p class="text-xl leading-relaxed" style="color: var(--swiss-gray-700); max-width: 800px;">
+          Enter your submission ID or email address to check the status of your style guide submission.
+        </p>
+      </div>
+
+      {# Tracking Form #}
+      <div class="swiss-col-12 md:swiss-col-8" style="margin-bottom: var(--space-4xl);">
+        <div style="background: var(--swiss-gray-50); padding: var(--space-3xl); border: 2px solid var(--swiss-black);">
+          <form id="trackingForm">
+            <div style="margin-bottom: var(--space-xl);">
+              <label for="trackingEmail" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
+                Email Address
+              </label>
+              <input 
+                type="email" 
+                id="trackingEmail" 
+                required
+                placeholder="email@example.com"
+                class="w-full p-3 border-2 border-black font-mono"
+                style="background: var(--swiss-white);"
+              >
+              <p class="text-sm mt-2" style="color: var(--swiss-gray-600);">Use the email you submitted with</p>
+            </div>
+
+            <div style="margin-bottom: var(--space-xl);">
+              <label for="submissionId" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
+                Submission ID (Optional)
+              </label>
+              <input 
+                type="text" 
+                id="submissionId" 
+                placeholder="e.g., SG-2025-001"
+                class="w-full p-3 border-2 border-black font-mono"
+                style="background: var(--swiss-white);"
+              >
+              <p class="text-sm mt-2" style="color: var(--swiss-gray-600);">Found in your confirmation email</p>
+            </div>
+
+            <button 
+              type="submit" 
+              class="font-mono font-bold uppercase text-sm px-8 py-4 border-2 border-black transition-colors"
+              style="background: var(--swiss-black); color: var(--swiss-white);"
+            >
+              Check Status →
+            </button>
+          </form>
+        </div>
+
+        {# Results Section #}
+        <div id="resultsSection" style="display: none; margin-top: var(--space-2xl);"></div>
+      </div>
+
+      {# Sidebar - Status Guide #}
+      <div class="swiss-col-12 md:swiss-col-4" style="margin-bottom: var(--space-4xl);">
+        <div style="position: sticky; top: var(--space-2xl);">
+          
+          {# Status Legend #}
+          <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-2xl); margin-bottom: var(--space-xl);">
+            <h3 class="font-bold text-xl mb-4" style="color: var(--swiss-black);">Status Guide</h3>
+            
+            <div style="margin-bottom: var(--space-md);">
+              <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                <div style="width: 12px; height: 12px; background: var(--swiss-red); border: 2px solid var(--swiss-black);"></div>
+                <strong class="font-mono text-sm">Pending Review</strong>
+              </div>
+              <p class="text-sm" style="color: var(--swiss-gray-700); padding-left: 24px;">
+                Your submission is in the queue and will be reviewed within 1-3 business days.
+              </p>
+            </div>
+
+            <div style="margin-bottom: var(--space-md);">
+              <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                <div style="width: 12px; height: 12px; background: #ffc107; border: 2px solid var(--swiss-black);"></div>
+                <strong class="font-mono text-sm">Under Review</strong>
+              </div>
+              <p class="text-sm" style="color: var(--swiss-gray-700); padding-left: 24px;">
+                A reviewer is currently evaluating your submission.
+              </p>
+            </div>
+
+            <div style="margin-bottom: var(--space-md);">
+              <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                <div style="width: 12px; height: 12px; background: #ff9800; border: 2px solid var(--swiss-black);"></div>
+                <strong class="font-mono text-sm">Changes Requested</strong>
+              </div>
+              <p class="text-sm" style="color: var(--swiss-gray-700); padding-left: 24px;">
+                Reviewer has provided feedback. Please update and resubmit.
+              </p>
+            </div>
+
+            <div style="margin-bottom: var(--space-md);">
+              <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                <div style="width: 12px; height: 12px; background: #4caf50; border: 2px solid var(--swiss-black);"></div>
+                <strong class="font-mono text-sm">Approved</strong>
+              </div>
+              <p class="text-sm" style="color: var(--swiss-gray-700); padding-left: 24px;">
+                Congratulations! Your style guide is now live in our gallery.
+              </p>
+            </div>
+
+            <div>
+              <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                <div style="width: 12px; height: 12px; background: var(--swiss-gray-600); border: 2px solid var(--swiss-black);"></div>
+                <strong class="font-mono text-sm">Rejected</strong>
+              </div>
+              <p class="text-sm" style="color: var(--swiss-gray-700); padding-left: 24px;">
+                Submission did not meet guidelines. See feedback for details.
+              </p>
+            </div>
+          </div>
+
+          {# Help Box #}
+          <div style="background: var(--swiss-red); color: var(--swiss-white); padding: var(--space-2xl); border: 2px solid var(--swiss-black);">
+            <h3 class="font-bold text-xl mb-3">Need Help?</h3>
+            <p class="text-sm mb-4">
+              Can't find your submission or have questions about the review process?
+            </p>
+            <a href="mailto:submissions@designgallery.com" style="display: inline-block; background: var(--swiss-white); color: var(--swiss-black); padding: var(--space-sm) var(--space-md); font-mono font-bold text-sm uppercase border: 2px solid var(--swiss-black);">
+              Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+// Demo submission data
+const mockSubmissions = [
+  {
+    id: "SG-2025-001",
+    email: "sarah@example.com",
+    styleGuideName: "Nordic Minimalism Design System",
+    submittedDate: "2025-12-08",
+    status: "pending",
+    statusColor: "#ef4444",
+    reviewer: null,
+    estimatedReview: "2025-12-11"
+  },
+  {
+    id: "SG-2025-002",
+    email: "marcus@example.com",
+    styleGuideName: "Bold Brutalist UI Kit",
+    submittedDate: "2025-12-07",
+    status: "under-review",
+    statusColor: "#ffc107",
+    reviewer: "Emily R.",
+    estimatedReview: "2025-12-10"
+  },
+  {
+    id: "SG-2025-003",
+    email: "demo@example.com",
+    styleGuideName: "Enterprise SaaS Design Language",
+    submittedDate: "2025-12-05",
+    status: "approved",
+    statusColor: "#4caf50",
+    reviewer: "Alex K.",
+    approvedDate: "2025-12-06",
+    galleryUrl: "/showcase/#enterprise-saas"
+  }
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+  const trackingForm = document.getElementById('trackingForm');
+  const resultsSection = document.getElementById('resultsSection');
+
+  trackingForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('trackingEmail').value.toLowerCase();
+    const submissionId = document.getElementById('submissionId').value.toUpperCase();
+
+    // Find matching submissions
+    let matches = mockSubmissions.filter(s => s.email.toLowerCase() === email);
+    
+    if (submissionId) {
+      matches = matches.filter(s => s.id === submissionId);
+    }
+
+    displayResults(matches, email);
+  });
+});
+
+function displayResults(submissions, email) {
+  const resultsSection = document.getElementById('resultsSection');
+  
+  if (submissions.length === 0) {
+    resultsSection.style.display = 'block';
+    resultsSection.innerHTML = `
+      <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-3xl); text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: var(--space-lg);">🔍</div>
+        <h3 class="font-bold text-xl mb-3" style="color: var(--swiss-black);">No Submissions Found</h3>
+        <p class="text-sm" style="color: var(--swiss-gray-700); max-width: 500px; margin: 0 auto;">
+          We couldn't find any submissions for <strong>${email}</strong>. Please check your email address or 
+          <a href="/submit-style-guide/" style="color: var(--swiss-red); text-decoration: underline;">submit a new style guide</a>.
+        </p>
+        <p class="text-sm mt-4" style="color: var(--swiss-gray-600);">
+          Demo: Try <strong>demo@example.com</strong>
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  resultsSection.style.display = 'block';
+  resultsSection.innerHTML = `
+    <h2 class="font-bold text-2xl mb-6" style="color: var(--swiss-black);">
+      Found ${submissions.length} Submission${submissions.length > 1 ? 's' : ''}
+    </h2>
+    ${submissions.map(submission => renderSubmissionCard(submission)).join('')}
+  `;
+}
+
+function renderSubmissionCard(submission) {
+  const statusLabels = {
+    'pending': 'Pending Review',
+    'under-review': 'Under Review',
+    'changes-requested': 'Changes Requested',
+    'approved': 'Approved',
+    'rejected': 'Rejected'
+  };
+
+  const statusLabel = statusLabels[submission.status] || submission.status;
+  
+  let statusDetails = '';
+  if (submission.status === 'pending') {
+    statusDetails = `
+      <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
+        <strong>Estimated Review:</strong> ${submission.estimatedReview}
+      </p>
+      <p class="text-sm" style="color: var(--swiss-gray-600);">
+        Your submission is in the queue. You'll receive an email when a reviewer begins evaluation.
+      </p>
+    `;
+  } else if (submission.status === 'under-review') {
+    statusDetails = `
+      <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
+        <strong>Reviewer:</strong> ${submission.reviewer}
+      </p>
+      <p class="text-sm" style="color: var(--swiss-gray-600);">
+        Your submission is currently being evaluated. Expect a decision within 1-2 business days.
+      </p>
+    `;
+  } else if (submission.status === 'approved') {
+    statusDetails = `
+      <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
+        <strong>Approved:</strong> ${submission.approvedDate}
+      </p>
+      <p class="text-sm mb-3" style="color: var(--swiss-gray-600);">
+        Congratulations! Your style guide is now live in our gallery.
+      </p>
+      <a href="${submission.galleryUrl}" class="inline-block font-mono font-bold uppercase text-sm px-4 py-2 border-2 border-black" style="background: var(--swiss-black); color: var(--swiss-white); text-decoration: none;">
+        View in Gallery →
+      </a>
+    `;
+  }
+
+  return `
+    <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-2xl); margin-bottom: var(--space-lg);">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+        <div>
+          <h3 class="font-bold text-xl mb-2" style="color: var(--swiss-black);">${submission.styleGuideName}</h3>
+          <p class="font-mono text-sm" style="color: var(--swiss-gray-600);">
+            ID: ${submission.id} • Submitted: ${submission.submittedDate}
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); background: ${submission.statusColor}; color: var(--swiss-white); font-mono text-xs font-bold uppercase;">
+          <div style="width: 8px; height: 8px; background: var(--swiss-white); border-radius: 50%;"></div>
+          ${statusLabel}
+        </div>
+      </div>
+
+      <div style="padding: var(--space-lg); background: var(--swiss-gray-50); border-left: 4px solid ${submission.statusColor};">
+        ${statusDetails}
+      </div>
+    </div>
+  `;
+}
+</script>
