@@ -12,6 +12,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/favicon.svg": "favicon.svg" });
   eleventyConfig.addPassthroughCopy({ "src/css/print.css": "css/print.css" });
+  eleventyConfig.addPassthroughCopy({ "src/js/cookie-consent.js": "js/cookie-consent.js" });
   eleventyConfig.addPassthroughCopy("CNAME");
 
   // Add plugins

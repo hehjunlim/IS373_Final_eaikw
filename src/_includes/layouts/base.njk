@@ -143,6 +143,9 @@
       ]
     }
     </script>
+    
+    {# GDPR Cookie Consent - Load Early for Banner Display #}
+    <script src="{{ '/js/cookie-consent.js' | baseUrl }}" defer></script>
 </head>
 <body class="font-sans antialiased text-neutral-900 bg-white min-h-screen flex flex-col">
     <!-- Swiss International Typographic Style Navigation -->
@@ -278,11 +281,21 @@
                     </li>
                     <li class="mb-6" style="border-top: 1px solid var(--swiss-gray-300); padding-top: 1.5rem;">
                         <a 
+                            href="/contact/" 
+                            class="block font-bold uppercase tracking-wider"
+                            style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if '/contact/' in page.url %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
+                        >
+                            <span style="display: block; margin-bottom: 0.25rem;">05</span>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                    <li class="mb-6" style="border-top: 1px solid var(--swiss-gray-300); padding-top: 1.5rem;">
+                        <a 
                             href="/about/" 
                             class="block font-bold uppercase tracking-wider"
                             style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if page.url == '/about/' %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
                         >
-                            <span style="display: block; margin-bottom: 0.25rem;">05</span>
+                            <span style="display: block; margin-bottom: 0.25rem;">06</span>
                             <span>About</span>
                         </a>
                     </li>
@@ -346,7 +359,9 @@
                                 <li><a href="/blog/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Style Gallery</a></li>
                                 <li><a href="/projects/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Projects</a></li>
                                 <li><a href="/blog/submit-style-guide/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Style Submission</a></li>
+                                <li><a href="/contact/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Contact</a></li>
                                 <li><a href="/about/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">About</a></li>
+                                <li><a href="/privacy-policy/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s;">Privacy Policy</a></li>
                                 <li><a href="/about-site/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s;">About this Site</a></li>
                             </ul>
                         </dd>
@@ -422,9 +437,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Swiss Mobile Menu - Vanilla JavaScript (CSP-safe) -->
-    <script src="{{ '/js/mobile-menu.bundle.js' | baseUrl }}"></script>
     
     <!-- Swiss Menu Button - Refined Animation Styles -->
     <style>
@@ -464,6 +476,60 @@
         .menu-button:focus:not(:focus-visible) {
             outline: none;
         }
+        
+        /* Cookie Preferences Floating Button */
+        .cookie-prefs-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+            background: var(--swiss-white);
+            border: 2px solid var(--swiss-black);
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cookie-prefs-btn:hover {
+            background: var(--swiss-red);
+            color: var(--swiss-white);
+            border-color: var(--swiss-red);
+            transform: scale(1.1);
+        }
+        
+        .cookie-prefs-btn:focus {
+            outline: 2px solid var(--swiss-red);
+            outline-offset: 2px;
+        }
+        
+        @media (max-width: 640px) {
+            .cookie-prefs-btn {
+                bottom: 1rem;
+                right: 1rem;
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+        }
     </style>
+    
+    <!-- Cookie Preferences Floating Button -->
+    <button 
+        class="cookie-prefs-btn no-print" 
+        onclick="if(window.cookieConsent) window.cookieConsent.showPreferences()"
+        title="Manage Cookie Preferences"
+        aria-label="Manage Cookie Preferences"
+    >
+        🍪
+    </button>
+
+    <!-- Load Mobile Menu Script -->
+    <script src="{{ '/js/mobile-menu.bundle.js' | baseUrl }}"></script>
 </body>
 </html>
