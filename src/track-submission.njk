@@ -28,32 +28,18 @@ permalink: /track-submission/
         <div style="background: var(--swiss-gray-50); padding: var(--space-3xl); border: 2px solid var(--swiss-black);">
           <form id="trackingForm">
             <div style="margin-bottom: var(--space-xl);">
-              <label for="trackingEmail" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
-                Email Address
-              </label>
-              <input 
-                type="email" 
-                id="trackingEmail" 
-                required
-                placeholder="email@example.com"
-                class="w-full p-3 border-2 border-black font-mono"
-                style="background: var(--swiss-white);"
-              >
-              <p class="text-sm mt-2" style="color: var(--swiss-gray-600);">Use the email you submitted with</p>
-            </div>
-
-            <div style="margin-bottom: var(--space-xl);">
-              <label for="submissionId" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
-                Submission ID (Optional)
+              <label for="confirmationNumber" class="block font-mono font-bold text-sm uppercase mb-2" style="color: var(--swiss-black);">
+                Confirmation Number
               </label>
               <input 
                 type="text" 
-                id="submissionId" 
-                placeholder="e.g., SG-2025-001"
+                id="confirmationNumber" 
+                required
+                placeholder="e.g., DSG-A1B2C3D4"
                 class="w-full p-3 border-2 border-black font-mono"
-                style="background: var(--swiss-white);"
+                style="background: var(--swiss-white); text-transform: uppercase;"
               >
-              <p class="text-sm mt-2" style="color: var(--swiss-gray-600);">Found in your confirmation email</p>
+              <p class="text-sm mt-2" style="color: var(--swiss-gray-600);">8-character code from your confirmation (DSG-XXXXXXXX)</p>
             </div>
 
             <button 
@@ -147,93 +133,56 @@ permalink: /track-submission/
 </section>
 
 <script>
-// Demo submission data
-const mockSubmissions = [
-  {
-    id: "SG-2025-001",
-    email: "sarah@example.com",
-    styleGuideName: "Nordic Minimalism Design System",
-    submittedDate: "2025-12-08",
-    status: "pending",
-    statusColor: "#ef4444",
-    reviewer: null,
-    estimatedReview: "2025-12-11"
-  },
-  {
-    id: "SG-2025-002",
-    email: "marcus@example.com",
-    styleGuideName: "Bold Brutalist UI Kit",
-    submittedDate: "2025-12-07",
-    status: "under-review",
-    statusColor: "#ffc107",
-    reviewer: "Emily R.",
-    estimatedReview: "2025-12-10"
-  },
-  {
-    id: "SG-2025-003",
-    email: "demo@example.com",
-    styleGuideName: "Enterprise SaaS Design Language",
-    submittedDate: "2025-12-05",
-    status: "approved",
-    statusColor: "#4caf50",
-    reviewer: "Alex K.",
-    approvedDate: "2025-12-06",
-    galleryUrl: "/showcase/#enterprise-saas"
-  }
-];
-
 document.addEventListener('DOMContentLoaded', function() {
   const trackingForm = document.getElementById('trackingForm');
   const resultsSection = document.getElementById('resultsSection');
+  const submitButton = trackingForm.querySelector('button[type="submit"]');
 
-  trackingForm.addEventListener('submit', function(e) {
+  trackingForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const email = document.getElementById('trackingEmail').value.toLowerCase();
-    const submissionId = document.getElementById('submissionId').value.toUpperCase();
-
-    // Find matching submissions
-    let matches = mockSubmissions.filter(s => s.email.toLowerCase() === email);
+    const confirmationNumber = document.getElementById('confirmationNumber').value.trim().toUpperCase();
     
-    if (submissionId) {
-      matches = matches.filter(s => s.id === submissionId);
-    }
+    // Disable button during request
+    submitButton.disabled = true;
+    submitButton.textContent = 'Checking...';
+    
+    try {
+      const response = await fetch('/.netlify/functions/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ confirmationNumber })
+      });
 
-    displayResults(matches, email);
+      const data = await response.json();
+      
+      if (data.success && data.submission) {
+        displayResult(data.submission);
+      } else {
+        displayNotFound(confirmationNumber);
+      }
+    } catch (error) {
+      displayError(error.message);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Check Status →';
+    }
   });
 });
 
-function displayResults(submissions, email) {
+function displayResult(submission) {
   const resultsSection = document.getElementById('resultsSection');
   
-  if (submissions.length === 0) {
-    resultsSection.style.display = 'block';
-    resultsSection.innerHTML = `
-      <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-3xl); text-align: center;">
-        <div style="font-size: 3rem; margin-bottom: var(--space-lg);">🔍</div>
-        <h3 class="font-bold text-xl mb-3" style="color: var(--swiss-black);">No Submissions Found</h3>
-        <p class="text-sm" style="color: var(--swiss-gray-700); max-width: 500px; margin: 0 auto;">
-          We couldn't find any submissions for <strong>${email}</strong>. Please check your email address or 
-          <a href="/submit-style-guide/" style="color: var(--swiss-red); text-decoration: underline;">submit a new style guide</a>.
-        </p>
-        <p class="text-sm mt-4" style="color: var(--swiss-gray-600);">
-          Demo: Try <strong>demo@example.com</strong>
-        </p>
-      </div>
-    `;
-    return;
-  }
+  const statusColors = {
+    'pending': '#ef4444',
+    'under-review': '#ffc107',
+    'changes-requested': '#ff9800',
+    'approved': '#4caf50',
+    'rejected': '#6b7280'
+  };
 
-  resultsSection.style.display = 'block';
-  resultsSection.innerHTML = `
-    <h2 class="font-bold text-2xl mb-6" style="color: var(--swiss-black);">
-      Found ${submissions.length} Submission${submissions.length > 1 ? 's' : ''}
-    </h2>
-    ${submissions.map(submission => renderSubmissionCard(submission)).join('')}
-  `;
-}
-
-function renderSubmissionCard(submission) {
   const statusLabels = {
     'pending': 'Pending Review',
     'under-review': 'Under Review',
@@ -242,13 +191,18 @@ function renderSubmissionCard(submission) {
     'rejected': 'Rejected'
   };
 
+  const statusColor = statusColors[submission.status] || '#6b7280';
   const statusLabel = statusLabels[submission.status] || submission.status;
   
   let statusDetails = '';
   if (submission.status === 'pending') {
+    const submittedDate = new Date(submission.submittedDate);
+    const estimatedReview = new Date(submittedDate);
+    estimatedReview.setDate(estimatedReview.getDate() + 3);
+    
     statusDetails = `
       <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
-        <strong>Estimated Review:</strong> ${submission.estimatedReview}
+        <strong>Estimated Review:</strong> ${estimatedReview.toLocaleDateString()}
       </p>
       <p class="text-sm" style="color: var(--swiss-gray-600);">
         Your submission is in the queue. You'll receive an email when a reviewer begins evaluation.
@@ -257,7 +211,7 @@ function renderSubmissionCard(submission) {
   } else if (submission.status === 'under-review') {
     statusDetails = `
       <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
-        <strong>Reviewer:</strong> ${submission.reviewer}
+        ${submission.reviewer ? `<strong>Reviewer:</strong> ${submission.reviewer}` : ''}
       </p>
       <p class="text-sm" style="color: var(--swiss-gray-600);">
         Your submission is currently being evaluated. Expect a decision within 1-2 business days.
@@ -266,35 +220,79 @@ function renderSubmissionCard(submission) {
   } else if (submission.status === 'approved') {
     statusDetails = `
       <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
-        <strong>Approved:</strong> ${submission.approvedDate}
+        ${submission.reviewDate ? `<strong>Approved:</strong> ${new Date(submission.reviewDate).toLocaleDateString()}` : ''}
       </p>
       <p class="text-sm mb-3" style="color: var(--swiss-gray-600);">
-        Congratulations! Your style guide is now live in our gallery.
+        Congratulations! Your style guide will be featured in our gallery.
       </p>
-      <a href="${submission.galleryUrl}" class="inline-block font-mono font-bold uppercase text-sm px-4 py-2 border-2 border-black" style="background: var(--swiss-black); color: var(--swiss-white); text-decoration: none;">
-        View in Gallery →
-      </a>
+    `;
+  } else if (submission.status === 'rejected' || submission.status === 'changes-requested') {
+    statusDetails = `
+      ${submission.reviewDate ? `
+        <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
+          <strong>Reviewed:</strong> ${new Date(submission.reviewDate).toLocaleDateString()}
+        </p>
+      ` : ''}
+      ${submission.reviewNotes ? `
+        <p class="text-sm mb-2" style="color: var(--swiss-gray-700);">
+          <strong>Feedback:</strong>
+        </p>
+        <p class="text-sm" style="color: var(--swiss-gray-600);">
+          ${submission.reviewNotes}
+        </p>
+      ` : ''}
     `;
   }
 
-  return `
-    <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-2xl); margin-bottom: var(--space-lg);">
-      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
-        <div>
-          <h3 class="font-bold text-xl mb-2" style="color: var(--swiss-black);">${submission.styleGuideName}</h3>
+  resultsSection.style.display = 'block';
+  resultsSection.innerHTML = `
+    <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-2xl);">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg); flex-wrap: wrap; gap: var(--space-md);">
+        <div style="flex: 1; min-width: 250px;">
+          <h3 class="font-bold text-xl mb-2" style="color: var(--swiss-black);">${submission.designStyle || 'Style Guide Submission'}</h3>
           <p class="font-mono text-sm" style="color: var(--swiss-gray-600);">
-            ID: ${submission.id} • Submitted: ${submission.submittedDate}
+            ${submission.confirmationNumber} • Submitted: ${new Date(submission.submittedDate).toLocaleDateString()}
           </p>
         </div>
-        <div style="display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); background: ${submission.statusColor}; color: var(--swiss-white); font-mono text-xs font-bold uppercase;">
+        <div style="display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); background: ${statusColor}; color: var(--swiss-white); font-mono text-xs font-bold uppercase; white-space: nowrap;">
           <div style="width: 8px; height: 8px; background: var(--swiss-white); border-radius: 50%;"></div>
           ${statusLabel}
         </div>
       </div>
 
-      <div style="padding: var(--space-lg); background: var(--swiss-gray-50); border-left: 4px solid ${submission.statusColor};">
+      <div style="padding: var(--space-lg); background: var(--swiss-gray-50); border-left: 4px solid ${statusColor};">
         ${statusDetails}
       </div>
+    </div>
+  `;
+}
+
+function displayNotFound(confirmationNumber) {
+  const resultsSection = document.getElementById('resultsSection');
+  resultsSection.style.display = 'block';
+  resultsSection.innerHTML = `
+    <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-3xl); text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: var(--space-lg);">🔍</div>
+      <h3 class="font-bold text-xl mb-3" style="color: var(--swiss-black);">Submission Not Found</h3>
+      <p class="text-sm" style="color: var(--swiss-gray-700); max-width: 500px; margin: 0 auto;">
+        We couldn't find a submission with confirmation number <strong>${confirmationNumber}</strong>. 
+        Please check the number and try again, or 
+        <a href="/blog/submit-style-guide/" style="color: var(--swiss-red); text-decoration: underline;">submit a new style guide</a>.
+      </p>
+    </div>
+  `;
+}
+
+function displayError(message) {
+  const resultsSection = document.getElementById('resultsSection');
+  resultsSection.style.display = 'block';
+  resultsSection.innerHTML = `
+    <div style="background: var(--swiss-white); border: 2px solid var(--swiss-black); padding: var(--space-3xl); text-align: center; border-left: 4px solid #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: var(--space-lg);">⚠️</div>
+      <h3 class="font-bold text-xl mb-3" style="color: var(--swiss-black);">Error</h3>
+      <p class="text-sm" style="color: var(--swiss-gray-700); max-width: 500px; margin: 0 auto;">
+        ${message}. Please try again later.
+      </p>
     </div>
   `;
 }

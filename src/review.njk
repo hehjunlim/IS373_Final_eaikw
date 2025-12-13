@@ -6,7 +6,7 @@ permalink: /review/
 eleventyExcludeFromCollections: true
 ---
 
-<div id="reviewModeRequired" style="display: none;">
+<div id="reviewModeRequired">
   <section class="py-12 md:py-16 lg:py-20">
     <div style="max-width: 1440px; margin: 0 auto; padding-left: var(--swiss-grid-margin); padding-right: var(--swiss-grid-margin);">
       {# Header #}
@@ -19,208 +19,223 @@ eleventyExcludeFromCollections: true
       </div>
 
       {# Stats Overview #}
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+      <div id="statsOverview" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         <div style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
           <p class="text-sm uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600); margin-bottom: 0.5rem;">Total Submissions</p>
-          <p class="font-black" style="font-size: 2.5rem; color: var(--swiss-black); line-height: 1;">{{ submissions | length }}</p>
+          <p id="totalCount" class="font-black" style="font-size: 2.5rem; color: var(--swiss-black); line-height: 1;">0</p>
         </div>
         <div style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
           <p class="text-sm uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600); margin-bottom: 0.5rem;">Pending Review</p>
-          <p class="font-black" style="font-size: 2.5rem; color: #FFA500; line-height: 1;">{{ submissions | selectattr("status", "equalto", "pending") | list | length }}</p>
+          <p id="pendingCount" class="font-black" style="font-size: 2.5rem; color: #FFA500; line-height: 1;">0</p>
         </div>
         <div style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
           <p class="text-sm uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600); margin-bottom: 0.5rem;">Approved</p>
-          <p class="font-black" style="font-size: 2.5rem; color: #22C55E; line-height: 1;">{{ submissions | selectattr("status", "equalto", "approved") | list | length }}</p>
+          <p id="approvedCount" class="font-black" style="font-size: 2.5rem; color: #22C55E; line-height: 1;">0</p>
         </div>
         <div style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
           <p class="text-sm uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600); margin-bottom: 0.5rem;">Declined</p>
-          <p class="font-black" style="font-size: 2.5rem; color: #EF4444; line-height: 1;">{{ submissions | selectattr("status", "equalto", "declined") | list | length }}</p>
+          <p id="declinedCount" class="font-black" style="font-size: 2.5rem; color: #EF4444; line-height: 1;">0</p>
         </div>
       </div>
 
       {# Filter Tabs #}
-      <div class="mb-8" style="border-bottom: 2px solid var(--swiss-gray-300);">
+      <div id="filterTabs" class="mb-8" style="border-bottom: 2px solid var(--swiss-gray-300);">
         <div style="display: flex; gap: 0;">
           <button class="filter-tab active" data-filter="all" style="padding: 1rem 2rem; background: none; border: none; border-bottom: 3px solid var(--swiss-red); font-weight: bold; cursor: pointer; transition: all 0.2s;">
-            All ({{ submissions | length }})
+            All (<span id="allCount">0</span>)
           </button>
           <button class="filter-tab" data-filter="pending" style="padding: 1rem 2rem; background: none; border: none; border-bottom: 3px solid transparent; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-            Pending ({{ submissions | selectattr("status", "equalto", "pending") | list | length }})
+            Pending (<span id="pendingTabCount">0</span>)
           </button>
           <button class="filter-tab" data-filter="approved" style="padding: 1rem 2rem; background: none; border: none; border-bottom: 3px solid transparent; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-            Approved ({{ submissions | selectattr("status", "equalto", "approved") | list | length }})
+            Approved (<span id="approvedTabCount">0</span>)
           </button>
-          <button class="filter-tab" data-filter="declined" style="padding: 1rem 2rem; background: none; border: none; border-bottom: 3px solid transparent; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-            Declined ({{ submissions | selectattr("status", "equalto", "declined") | list | length }})
+          <button class="filter-tab" data-filter="rejected" style="padding: 1rem 2rem; background: none; border: none; border-bottom: 3px solid transparent; font-weight: bold; cursor: pointer; transition: all 0.2s;">
+            Rejected (<span id="rejectedTabCount">0</span>)
           </button>
         </div>
       </div>
 
-      {# Submissions List #}
+      {# Submissions List - will be populated by JavaScript #}
       <div id="submissionsList" class="space-y-6">
-        {% for submission in submissions | reverse %}
-        <article class="submission-card" data-status="{{ submission.status }}" style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;">
-          {# Header Row #}
-          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                <h3 class="font-bold" style="font-size: 1.5rem; margin: 0;">{{ submission.styleName }}</h3>
-                <span class="status-badge status-{{ submission.status }}" style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; 
-                  {% if submission.status == 'pending' %}background: #FEF3C7; color: #92400E;
-                  {% elif submission.status == 'approved' %}background: #D1FAE5; color: #065F46;
-                  {% elif submission.status == 'declined' %}background: #FEE2E2; color: #991B1B;
-                  {% endif %}">
-                  {{ submission.status }}
-                </span>
-              </div>
-              <p style="color: var(--swiss-gray-600); font-size: 0.875rem; margin: 0;">
-                Submitted by <strong>{{ submission.submitterName }}</strong> on {{ submission.submittedAt | dateFormat }}
-              </p>
-            </div>
-            <p class="text-xs uppercase tracking-wider font-bold" style="color: var(--swiss-gray-500);">
-              ID: {{ submission.id }}
-            </p>
-          </div>
-
-          {# Content Grid #}
-          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-bottom: 1.5rem;">
-            {# Color Palette Preview #}
-            <div>
-              <p class="text-sm font-bold uppercase tracking-wider mb-3" style="color: var(--swiss-gray-600);">Color Palette</p>
-              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;">
-                <div>
-                  <div style="width: 100%; height: 60px; background: {{ submission.colorPalette.primary }}; border-radius: 4px; border: 1px solid var(--swiss-gray-300);"></div>
-                  <p style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--swiss-gray-600);">Primary</p>
-                </div>
-                <div>
-                  <div style="width: 100%; height: 60px; background: {{ submission.colorPalette.secondary }}; border-radius: 4px; border: 1px solid var(--swiss-gray-300);"></div>
-                  <p style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--swiss-gray-600);">Secondary</p>
-                </div>
-                <div>
-                  <div style="width: 100%; height: 60px; background: {{ submission.colorPalette.accent }}; border-radius: 4px; border: 1px solid var(--swiss-gray-300);"></div>
-                  <p style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--swiss-gray-600);">Accent</p>
-                </div>
-                <div>
-                  <div style="width: 100%; height: 60px; background: {{ submission.colorPalette.background }}; border-radius: 4px; border: 1px solid var(--swiss-gray-300);"></div>
-                  <p style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--swiss-gray-600);">Background</p>
-                </div>
-              </div>
-            </div>
-
-            {# Details #}
-            <div>
-              <p class="text-sm font-bold uppercase tracking-wider mb-3" style="color: var(--swiss-gray-600);">Description</p>
-              <p style="color: var(--swiss-gray-700); line-height: 1.6; margin-bottom: 1rem;">{{ submission.description }}</p>
-              
-              <p class="text-sm font-bold uppercase tracking-wider mb-2" style="color: var(--swiss-gray-600);">Tags</p>
-              <div style="display: flex; flex-wrap: gap: 0.5rem; margin-bottom: 1rem;">
-                {% for tag in submission.tags %}
-                <span style="padding: 0.25rem 0.75rem; background: var(--swiss-gray-100); color: var(--swiss-gray-700); border-radius: 4px; font-size: 0.875rem;">{{ tag }}</span>
-                {% endfor %}
-              </div>
-
-              <p class="text-sm font-bold uppercase tracking-wider mb-2" style="color: var(--swiss-gray-600);">Contact</p>
-              <p style="color: var(--swiss-gray-700); font-size: 0.875rem;">{{ submission.submitterEmail }}</p>
-            </div>
-          </div>
-
-          {# Action Buttons #}
-          <div style="display: flex; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--swiss-gray-200);">
-            <a href="{{ submission.demoUrl }}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--swiss-black); color: white; border-radius: 4px; font-weight: bold; text-decoration: none; transition: all 0.2s;">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-              </svg>
-              View Demo
-            </a>
-            
-            {% if submission.status == 'pending' %}
-            <button onclick="updateStatus('{{ submission.id }}', 'approved')" style="padding: 0.75rem 1.5rem; background: #22C55E; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-              ✓ Approve
-            </button>
-            <button onclick="updateStatus('{{ submission.id }}', 'declined')" style="padding: 0.75rem 1.5rem; background: #EF4444; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-              ✗ Decline
-            </button>
-            <button onclick="requestChanges('{{ submission.id }}')" style="padding: 0.75rem 1.5rem; background: #F59E0B; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-              Request Changes
-            </button>
-            {% endif %}
-          </div>
-        </article>
-        {% endfor %}
+        <div style="text-align: center; padding: 3rem; color: var(--swiss-gray-600);">
+          <p>Loading submissions...</p>
+        </div>
       </div>
     </div>
   </section>
 </div>
 
-<div id="reviewModeDisabled" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
-  <div style="text-align: center; max-width: 500px; padding: 3rem;">
-    <svg width="80" height="80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin: 0 auto 2rem; color: var(--swiss-gray-400);">
-      <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-    </svg>
-    <h1 class="font-bold mb-4" style="font-size: 2rem;">Review Mode Required</h1>
-    <p style="color: var(--swiss-gray-600); line-height: 1.6; margin-bottom: 2rem;">
-      This page is only accessible when Review Mode is enabled. Toggle Review Mode in the header to access submission management features.
-    </p>
-    <a href="/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--swiss-black); color: white; border-radius: 4px; font-weight: bold; text-decoration: none;">
-      ← Back to Home
-    </a>
-  </div>
-</div>
-
 <script>
+  let allSubmissions = [];
+
   // Check review mode on load
   function checkReviewMode() {
     const isReviewMode = localStorage.getItem('reviewMode') === 'true';
     if (isReviewMode) {
       document.getElementById('reviewModeRequired').style.display = 'block';
       document.getElementById('reviewModeDisabled').style.display = 'none';
+      loadSubmissions();
     } else {
       document.getElementById('reviewModeRequired').style.display = 'none';
       document.getElementById('reviewModeDisabled').style.display = 'flex';
     }
   }
-  
-  checkReviewMode();
-  
-  // Listen for review mode changes
-  window.addEventListener('storage', checkReviewMode);
-  window.addEventListener('reviewModeChange', checkReviewMode);
+<script>
+  let allSubmissions = [];
 
-  // Filter functionality
-  document.querySelectorAll('.filter-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      const filter = this.dataset.filter;
-      
-      // Update active tab
-      document.querySelectorAll('.filter-tab').forEach(t => {
-        t.style.borderBottomColor = 'transparent';
-        t.classList.remove('active');
-      });
-      this.style.borderBottomColor = 'var(--swiss-red)';
-      this.classList.add('active');
-      
-      // Filter submissions
-      document.querySelectorAll('.submission-card').forEach(card => {
-        if (filter === 'all' || card.dataset.status === filter) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
+  // Load submissions on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    loadSubmissions();
   });
 
-  // Mock action functions (would connect to backend in production)
-  function updateStatus(id, status) {
-    alert(`Submission ${id} status updated to: ${status}\n\nIn production, this would update the database and send notification emails.`);
-    // Reload to show updated status
-    setTimeout(() => location.reload(), 1000);
+  // Load submissions from API
+  async function loadSubmissions() {
+    }
   }
 
-  function requestChanges(id) {
+  // Update statistics
+  function updateStats(submissions) {
+    const pending = submissions.filter(s => s.status === 'pending').length;
+    const approved = submissions.filter(s => s.status === 'approved').length;
+    const rejected = submissions.filter(s => s.status === 'rejected').length;
+    
+    document.getElementById('totalCount').textContent = submissions.length;
+    document.getElementById('pendingCount').textContent = pending;
+    document.getElementById('approvedCount').textContent = approved;
+    document.getElementById('declinedCount').textContent = rejected;
+    
+    document.getElementById('allCount').textContent = submissions.length;
+    document.getElementById('pendingTabCount').textContent = pending;
+    document.getElementById('approvedTabCount').textContent = approved;
+    document.getElementById('rejectedTabCount').textContent = rejected;
+  }
+
+  // Render submissions
+  function renderSubmissions(submissions) {
+    const container = document.getElementById('submissionsList');
+    
+    if (submissions.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: var(--swiss-gray-600);">
+          <p>No submissions yet.</p>
+        </div>
+      `;
+      return;
+    }
+    
+    container.innerHTML = submissions.map(submission => renderSubmissionCard(submission)).join('');
+    
+    // Attach filter functionality
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const filter = this.dataset.filter;
+        
+        // Update active tab
+        document.querySelectorAll('.filter-tab').forEach(t => {
+          t.style.borderBottomColor = 'transparent';
+          t.classList.remove('active');
+        });
+        this.style.borderBottomColor = 'var(--swiss-red)';
+        this.classList.add('active');
+        
+        // Filter submissions
+        document.querySelectorAll('.submission-card').forEach(card => {
+          if (filter === 'all' || card.dataset.status === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  // Render individual submission card
+  function renderSubmissionCard(submission) {
+    const statusColors = {
+      'pending': { bg: '#FEF3C7', text: '#92400E' },
+      'approved': { bg: '#D1FAE5', text: '#065F46' },
+      'rejected': { bg: '#FEE2E2', text: '#991B1B' }
+    };
+    
+    const statusStyle = statusColors[submission.status] || { bg: '#F3F4F6', text: '#374151' };
+    const submittedDate = new Date(submission.submittedDate).toLocaleDateString();
+    
+    return `
+      <article class="submission-card" data-status="${submission.status}" style="background: white; border: 1px solid var(--swiss-gray-300); border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+              <h3 class="font-bold" style="font-size: 1.5rem; margin: 0;">${submission.designStyle || 'Untitled Style Guide'}</h3>
+              <span class="status-badge" style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; background: ${statusStyle.bg}; color: ${statusStyle.text};">
+                ${submission.status}
+              </span>
+            </div>
+            <p style="color: var(--swiss-gray-600); font-size: 0.875rem; margin: 0;">
+              Submitted by <strong>${submission.name}</strong> on ${submittedDate}
+            </p>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold" style="color: var(--swiss-gray-500);">
+            ${submission.confirmationNumber}
+          </p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <p class="text-sm font-bold uppercase tracking-wider mb-2" style="color: var(--swiss-gray-600);">Contact</p>
+          <p style="color: var(--swiss-gray-700); font-size: 0.875rem;">${submission.email}</p>
+          
+          ${submission.demoUrl ? `
+            <p class="text-sm font-bold uppercase tracking-wider mb-2 mt-3" style="color: var(--swiss-gray-600);">Demo URL</p>
+            <a href="${submission.demoUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--swiss-red); text-decoration: underline; font-size: 0.875rem;">${submission.demoUrl}</a>
+          ` : ''}
+          
+          ${submission.toolsUsed ? `
+            <p class="text-sm font-bold uppercase tracking-wider mb-2 mt-3" style="color: var(--swiss-gray-600);">Tools Used</p>
+            <p style="color: var(--swiss-gray-700); font-size: 0.875rem;">${submission.toolsUsed}</p>
+          ` : ''}
+          
+          ${submission.additionalNotes ? `
+            <p class="text-sm font-bold uppercase tracking-wider mb-2 mt-3" style="color: var(--swiss-gray-600);">Additional Notes</p>
+            <p style="color: var(--swiss-gray-700); font-size: 0.875rem; line-height: 1.6;">${submission.additionalNotes}</p>
+          ` : ''}
+        </div>
+
+        <div style="display: flex; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--swiss-gray-200); flex-wrap: wrap;">
+          ${submission.demoUrl ? `
+            <a href="${submission.demoUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--swiss-black); color: white; border-radius: 4px; font-weight: bold; text-decoration: none; transition: all 0.2s;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              View Demo
+            </a>
+          ` : ''}
+          
+          ${submission.status === 'pending' ? `
+            <button onclick="updateStatus('${submission.confirmationNumber}', 'approved')" style="padding: 0.75rem 1.5rem; background: #22C55E; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
+              ✓ Approve
+            </button>
+            <button onclick="updateStatus('${submission.confirmationNumber}', 'rejected')" style="padding: 0.75rem 1.5rem; background: #EF4444; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
+              ✗ Reject
+            </button>
+            <button onclick="requestChanges('${submission.confirmationNumber}')" style="padding: 0.75rem 1.5rem; background: #F59E0B; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
+              Request Changes
+            </button>
+          ` : ''}
+        </div>
+      </article>
+    `;
+  }
+
+  // Action functions (placeholders - would need backend update endpoint)
+  function updateStatus(confirmationNumber, status) {
+    alert(\`Submission \${confirmationNumber} status would be updated to: \${status}\n\nThis feature requires a backend update endpoint to be implemented.\`);
+  }
+
+  function requestChanges(confirmationNumber) {
     const feedback = prompt('Enter feedback for the submitter:');
     if (feedback) {
-      alert(`Change request sent to submitter for ${id}\n\nFeedback: ${feedback}\n\nIn production, this would send an email notification.`);
+      alert(\`Change request would be sent for \${confirmationNumber}\n\nFeedback: \${feedback}\n\nThis feature requires a backend update endpoint to be implemented.\`);
     }
   }
 </script>
