@@ -23,9 +23,23 @@ description: Director of Enterprise AI at NJIT building the future of AI educati
             Portfolio 2024
           </p>
         </div>
-        <h1 class="font-bold leading-none" style="font-size: var(--fluid-display); letter-spacing: -0.03em; line-height: 0.95; margin-bottom: var(--space-2xl);">
-          {{ site.author }}
+        <h1 class="font-bold leading-none hero-title" style="font-size: var(--fluid-display); letter-spacing: -0.03em; line-height: 0.95; margin-bottom: var(--space-2xl); background-color: #6e77aa; background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1.5px, transparent 1.5px); background-size: 12px 12px; padding: 0.5em; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; color: white;">
+          <span style="position: relative; z-index: 2;">{{ site.author }}</span>
+          <span class="hero-shine" style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shine 3s infinite;"></span>
         </h1>
+        <style>
+          @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+          }
+          .hero-title {
+            animation: float 6s ease-in-out infinite;
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+        </style>
         <div style="border-top: 2px solid var(--swiss-black); margin-top: var(--space-xl); margin-bottom: var(--space-xl);"></div>
         <h2 class="font-bold uppercase tracking-wider" style="font-size: var(--fluid-h3); margin-bottom: var(--space-xl); letter-spacing: 0.1em;">
           Director, Enterprise AI @ NJIT<br>Community Builder & Educator
@@ -45,23 +59,15 @@ description: Director of Enterprise AI at NJIT building the future of AI educati
             Creating a collaborative platform where students share, discover, and elevate each other's digital creativity—fostering a community where every line of code and pixel of design contributes to collective learning and innovation.
           </dd>
         </div>
-        <div style="margin-bottom: var(--space-xl);">
-          <dt class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-600); margin-bottom: var(--space-sm); letter-spacing: 0.15em;">
-            Impact
-          </dt>
-          <dd class="text-lg leading-relaxed" style="color: var(--swiss-gray-800);">
-            23 years at NJIT. 10,000+ students. Founded Web Systems program, building Enterprise AI degree. Connecting talent, industry, and Newark's future.
-          </dd>
-        </div>
       </dl>
       
       {# Swiss Button Group #}
       <div class="flex flex-col sm:flex-row gap-4" style="margin-top: var(--space-2xl);">
-        <a href="/townhall/" class="btn-swiss-primary">
-          JOIN TOWN HALL
+        <a href="/blog/" class="btn-swiss-primary">
+          VIEW STYLE GALLERY
         </a>
         <a href="/about/" class="btn-swiss">
-          ABOUT ME
+          ABOUT US
         </a>
       </div>
     </div>
@@ -71,374 +77,14 @@ description: Director of Enterprise AI at NJIT building the future of AI educati
   <div class="swiss-divider"></div>
 </section>
 
-{# Reading Paths Section #}
-<section
-  data-component="reading-paths"
-  data-section="navigation"
-  style="padding-top: var(--space-5xl); padding-bottom: var(--space-5xl); background-color: #365d9f; color: var(--swiss-white);"
->
-  <div class="swiss-grid">
-    {# Section Header #}
-    <div class="swiss-col-12" style="margin-bottom: var(--space-4xl);">
-      <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-red); margin-bottom: var(--space-md); letter-spacing: 0.15em;">
-        01 — Start Here
-      </p>
-      <h2 class="font-black" style="font-size: var(--fluid-h1); letter-spacing: -0.02em; line-height: 1.1; color: var(--swiss-white);">
-        Choose Your Path
-      </h2>
-      <div style="width: 60px; height: 2px; background-color: var(--swiss-red); margin-top: var(--space-xl);"></div>
-      <p class="text-lg leading-relaxed" style="color: var(--swiss-gray-400); max-width: 700px; margin-top: var(--space-xl);">
-        Different audiences need different entry points. Pick the path that matches where you are and what you need.
-      </p>
-    </div>
-    
-    {# Four Reading Paths - SWISS ENHANCED #}
-    <div class="swiss-col-12">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        {# Path 1: Students #}
-        <article 
-          data-path-card
-          data-index="1"
-          class="path-card group relative"
-          style="
-            border: 2px solid var(--swiss-gray-700); 
-            background-color: #365d9f; 
-            padding: var(--space-3xl);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            overflow: hidden;
-          ">
-          
-          {# Geometric overlay on hover #}
-          <div class="path-overlay" style="
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 120px;
-            height: 120px;
-            background-color: var(--swiss-red);
-            opacity: 0;
-            transform: translate(60px, -60px) rotate(45deg);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1;
-          "></div>
-          
-          <div style="position: relative; z-index: 2;">
-            <span class="path-number font-black" style="
-              font-size: var(--fluid-h1); 
-              color: var(--swiss-gray-800); 
-              line-height: 1;
-              display: block;
-              transition: all 0.4s ease;
-            ">01</span>
-            <h3 class="path-title font-bold uppercase tracking-wider" style="
-              font-size: var(--fluid-h3); 
-              margin-top: var(--space-lg); 
-              margin-bottom: var(--space-lg); 
-              letter-spacing: 0.05em; 
-              color: var(--swiss-white);
-              transition: transform 0.3s ease;
-            ">
-              For Students
-            </h3>
-            <div class="path-accent-bar" style="
-              width: 48px; 
-              height: 2px; 
-              background-color: var(--swiss-red); 
-              margin-bottom: var(--space-lg);
-              transition: width 0.4s ease;
-            "></div>
-            <p class="leading-relaxed" style="color: var(--swiss-gray-400); margin-bottom: var(--space-xl);">
-              Worried about your degree's value? Wondering which skills to build? Start with honest answers about AI's impact on careers and education.
-            </p>
-            <div style="margin-bottom: var(--space-lg);">
-              <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-red); margin-bottom: var(--space-sm); letter-spacing: 0.15em;">
-                Recommended Reading Order
-              </p>
-              <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/skills-that-matter/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ Skills That Matter</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-job-reality/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Job Reality</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/education-ai-reality/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ Education AI Reality</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          {# Hover effect border #}
-          <div class="absolute inset-0 border-4 border-transparent transition-all pointer-events-none" style="margin: -2px;"></div>
-        </article>
-        
-        {# Path 2: Employers #}
-        <article 
-          data-path-card
-          data-index="2"
-          class="path-card group relative"
-          style="
-            border: 2px solid var(--swiss-gray-700); 
-            background-color: #365d9f; 
-            padding: var(--space-3xl);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            overflow: hidden;
-          ">
-          
-          {# Geometric overlay on hover #}
-          <div class="path-overlay" style="
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 120px;
-            height: 120px;
-            background-color: var(--swiss-red);
-            opacity: 0;
-            transform: translate(60px, -60px) rotate(45deg);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1;
-          "></div>
-          
-          <div style="position: relative; z-index: 2;">
-            <span class="path-number font-black" style="
-              font-size: var(--fluid-h1); 
-              color: var(--swiss-gray-800); 
-              line-height: 1;
-              display: block;
-              transition: all 0.4s ease;
-            ">02</span>
-            <h3 class="path-title font-bold uppercase tracking-wider" style="
-              font-size: var(--fluid-h3); 
-              margin-top: var(--space-lg); 
-              margin-bottom: var(--space-lg); 
-              letter-spacing: 0.05em; 
-              color: var(--swiss-white);
-              transition: transform 0.3s ease;
-            ">
-              For Employers
-            </h3>
-            <div class="path-accent-bar" style="
-              width: 48px; 
-              height: 2px; 
-              background-color: var(--swiss-red); 
-              margin-bottom: var(--space-lg);
-              transition: width 0.4s ease;
-            "></div>
-            <p class="leading-relaxed" style="color: var(--swiss-gray-400); margin-bottom: var(--space-xl);">
-              Implementing AI? Hiring AI talent? Start with reality checks on productivity, workforce transformation, and actual risks.
-            </p>
-            <div style="margin-bottom: var(--space-lg);">
-              <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-red); margin-bottom: var(--space-sm); letter-spacing: 0.15em;">
-                Recommended Reading Order
-              </p>
-              <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-productivity-reality/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Productivity Reality</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-job-reality/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Job Reality</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-risks-that-matter/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Risks That Matter</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          {# Hover effect border #}
-          <div class="absolute inset-0 border-4 border-transparent transition-all pointer-events-none" style="margin: -2px;"></div>
-        </article>
-        
-        {# Path 3: Skeptics #}
-        <article 
-          data-path-card
-          data-index="3"
-          class="path-card group relative"
-          style="
-            border: 2px solid var(--swiss-gray-700); 
-            background-color: #365d9f; 
-            padding: var(--space-3xl);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            overflow: hidden;
-          ">
-          
-          {# Geometric overlay on hover #}
-          <div class="path-overlay" style="
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 120px;
-            height: 120px;
-            background-color: var(--swiss-red);
-            opacity: 0;
-            transform: translate(60px, -60px) rotate(45deg);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1;
-          "></div>
-          
-          <div style="position: relative; z-index: 2;">
-            <span class="path-number font-black" style="
-              font-size: var(--fluid-h1); 
-              color: var(--swiss-gray-800); 
-              line-height: 1;
-              display: block;
-              transition: all 0.4s ease;
-            ">03</span>
-            <h3 class="path-title font-bold uppercase tracking-wider" style="
-              font-size: var(--fluid-h3); 
-              margin-top: var(--space-lg); 
-              margin-bottom: var(--space-lg); 
-              letter-spacing: 0.05em; 
-              color: var(--swiss-white);
-              transition: transform 0.3s ease;
-            ">
-              For Skeptics
-            </h3>
-            <div class="path-accent-bar" style="
-              width: 48px; 
-              height: 2px; 
-              background-color: var(--swiss-red); 
-              margin-bottom: var(--space-lg);
-              transition: width 0.4s ease;
-            "></div>
-            <p class="leading-relaxed" style="color: var(--swiss-gray-400); margin-bottom: var(--space-xl);">
-              Tired of AI hype? Think AGI is around the corner? Start with evidence-based analysis that cuts through both doom and utopia.
-            </p>
-            <div style="margin-bottom: var(--space-lg);">
-              <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-red); margin-bottom: var(--space-sm); letter-spacing: 0.15em;">
-                Recommended Reading Order
-              </p>
-              <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/agi-hype-cycle/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AGI Hype Cycle</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/how-to-think-about-ai/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ How to Think About AI</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-printing-press/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Printing Press</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          {# Hover effect border #}
-          <div class="absolute inset-0 border-4 border-transparent transition-all pointer-events-none" style="margin: -2px;"></div>
-        </article>
-        
-        {# Path 4: Believers #}
-        <article 
-          data-path-card
-          data-index="4"
-          class="path-card group relative"
-          style="
-            border: 2px solid var(--swiss-gray-700); 
-            background-color: #365d9f; 
-            padding: var(--space-3xl);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            overflow: hidden;
-          ">
-          
-          {# Geometric overlay on hover #}
-          <div class="path-overlay" style="
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 120px;
-            height: 120px;
-            background-color: var(--swiss-red);
-            opacity: 0;
-            transform: translate(60px, -60px) rotate(45deg);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1;
-          "></div>
-          
-          <div style="position: relative; z-index: 2;">
-            <span class="path-number font-black" style="
-              font-size: var(--fluid-h1); 
-              color: var(--swiss-gray-800); 
-              line-height: 1;
-              display: block;
-              transition: all 0.4s ease;
-            ">04</span>
-            <h3 class="path-title font-bold uppercase tracking-wider" style="
-              font-size: var(--fluid-h3); 
-              margin-top: var(--space-lg); 
-              margin-bottom: var(--space-lg); 
-              letter-spacing: 0.05em; 
-              color: var(--swiss-white);
-              transition: transform 0.3s ease;
-            ">
-              For Believers
-            </h3>
-            <div class="path-accent-bar" style="
-              width: 48px; 
-              height: 2px; 
-              background-color: var(--swiss-red); 
-              margin-bottom: var(--space-lg);
-              transition: width 0.4s ease;
-            "></div>
-            <p class="leading-relaxed" style="color: var(--swiss-gray-400); margin-bottom: var(--space-xl);">
-              Already using AI daily? Want to see real collaboration in action? Start with demonstrations of what actually works (and what doesn't).
-            </p>
-            <div style="margin-bottom: var(--space-lg);">
-              <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-red); margin-bottom: var(--space-sm); letter-spacing: 0.15em;">
-                Recommended Reading Order
-              </p>
-              <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/agi-hype-cycle/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AGI Hype Cycle</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-risks-that-matter/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Risks That Matter</a></li>
-                <li style="margin-bottom: var(--space-sm);"><a href="/blog/ai-job-reality/" class="path-link hover:underline transition-all" style="color: var(--swiss-gray-300);">→ AI Job Reality</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          {# Hover effect border #}
-          <div class="absolute inset-0 border-4 border-transparent transition-all pointer-events-none" style="margin: -2px;"></div>
-        </article>
-        
-      </div>
-    </div>
-    
-    {# Or Start At The Beginning #}
-    <div class="swiss-col-12" style="margin-top: var(--space-4xl); text-align: center;">
-      <p class="text-sm uppercase tracking-widest font-bold" style="color: var(--swiss-gray-500); margin-bottom: var(--space-lg); letter-spacing: 0.15em;">
-        Or Start At The Beginning
-      </p>
-      <a href="/blog/welcome/" class="inline-flex items-center gap-2 font-bold uppercase tracking-wider text-sm hover:gap-4 transition-all" style="color: var(--swiss-white); border: 2px solid var(--swiss-white); padding: 1rem 2rem;">
-        How I Built This in 10 Hours
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 10h10M10 5l5 5-5 5" stroke-linecap="square"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-  
-  {# Swiss path card interactions #}
-  <script src="/js/path-cards-enhanced.bundle.js" defer></script>
-</section>
-
-
-
 {# Why Choose Us - Features Section #}
 <section
   data-component="why-us"
   data-section="features"
   data-testid="why-us-section"
-  style="padding-top: var(--space-5xl); padding-bottom: var(--space-5xl); background-color: var(--swiss-white);"
+  style="padding-top: 0; padding-bottom: var(--space-5xl); background-color: var(--swiss-white);"
 >
   <div class="swiss-grid">
-    {# Section Header with Asymmetric Layout #}
-    <div class="swiss-col-12 md:swiss-col-6" style="margin-bottom: var(--space-4xl);">
-      <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-600); margin-bottom: var(--space-md); letter-spacing: 0.15em;">
-        03 — What Makes Us Different
-      </p>
-      <h2 class="font-black" style="font-size: var(--fluid-h1); letter-spacing: -0.02em; line-height: 1.1;">
-        Why Choose<br>Our Platform
-      </h2>
-    </div>
-    
-    <div class="swiss-col-12 md:swiss-col-6" style="margin-bottom: var(--space-4xl); display: flex; align-items: flex-end; justify-content: flex-start;">
-      <p class="text-lg leading-relaxed" style="color: var(--swiss-gray-700); max-width: 500px;">
-        A comprehensive design gallery platform built with precision, clarity, and user experience at its core.
-      </p>
-    </div>
-    
     {# Feature Cards Grid #}
     <div class="swiss-col-12">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
@@ -582,7 +228,7 @@ description: Director of Enterprise AI at NJIT building the future of AI educati
     
     {# Call to Action - Learn More About Us #}
     <div class="swiss-col-12" style="margin-top: var(--space-5xl); text-align: center;">
-      <div style="background: linear-gradient(135deg, #365d9f 0%, #451516 100%); border-radius: 8px; padding: 4rem 2rem; color: white;">
+      <div style="background: #451516; border-radius: 8px; padding: 4rem 2rem; color: white;">
         <p class="text-xs uppercase tracking-widest font-bold" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; letter-spacing: 0.15em;">
           Want to Know More?
         </p>

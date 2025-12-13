@@ -146,8 +146,16 @@
     
     {# GDPR Cookie Consent - Load Early for Banner Display #}
     <script src="{{ '/js/cookie-consent.js' | baseUrl }}" defer></script>
+    <style>
+        body {
+            background-color: #f9f6e8;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
-<body class="font-sans antialiased text-neutral-900 bg-white min-h-screen flex flex-col">
+<body class="font-sans antialiased text-neutral-900 min-h-screen flex flex-col">
     <!-- Swiss International Typographic Style Navigation -->
     <header data-component="header" data-testid="main-header" class="sticky top-0 z-50 no-print" style="background-color: var(--swiss-white); border-bottom: 3px solid var(--swiss-black);">
         <nav style="max-width: 1440px; margin: 0 auto; padding-left: 1rem; padding-right: 1rem;">
@@ -156,7 +164,7 @@
                 <a href="/" style="display: flex; flex-direction: column; line-height: 1; text-decoration: none; z-index: 60; position: relative; transition: opacity 0.2s;" class="group hover:opacity-80">
                     <!-- Main Logo -->
                     <span class="font-black" style="font-size: clamp(1.25rem, 3vw, 1.5rem); color: var(--swiss-black); letter-spacing: -0.03em; line-height: 1;">
-                        DESIGN <span style="color: var(--swiss-red); font-weight: 900;">GALLERY</span>
+                        DESIGN <span style="color: var(--swiss-red); font-weight: 900; background-image: radial-gradient(circle, rgba(0,0,0,0.15) 1px, transparent 1px); background-size: 8px 8px; padding: 0.1em 0.2em; border-radius: 2px;">GALLERY</span>
                     </span>
                     <!-- Tagline underneath -->
                     <span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.5rem; letter-spacing: 0.1em; margin-top: 0.25rem; line-height: 1;">WHERE STUDENT VISION MEETS WEB INNOVATION</span>
