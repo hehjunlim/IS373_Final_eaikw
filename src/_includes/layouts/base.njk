@@ -151,43 +151,45 @@
     <!-- Swiss International Typographic Style Navigation -->
     <header data-component="header" data-testid="main-header" class="sticky top-0 z-50 no-print" style="background-color: var(--swiss-white); border-bottom: 3px solid var(--swiss-black);">
         <nav style="max-width: 1440px; margin: 0 auto; padding-left: 1rem; padding-right: 1rem;">
-            <div class="flex items-center justify-between" style="height: 64px;">
-                <!-- Swiss Logo/Wordmark - EverydayAI by Abe and Hehjun -->
-                <a href="/" style="display: inline-block; line-height: 1; text-decoration: none; z-index: 60; position: relative; transition: opacity 0.2s;" class="group hover:opacity-80">
-                    <!-- Single Line Lockup with Perfect Swiss Typography -->
+            <div class="flex items-center justify-between" style="height: 64px; align-items: center;">
+                <!-- Swiss Logo/Wordmark - Design Gallery -->
+                <a href="/" style="display: flex; flex-direction: column; line-height: 1; text-decoration: none; z-index: 60; position: relative; transition: opacity 0.2s;" class="group hover:opacity-80">
+                    <!-- Main Logo -->
                     <span class="font-black" style="font-size: clamp(1.25rem, 3vw, 1.5rem); color: var(--swiss-black); letter-spacing: -0.03em; line-height: 1;">
-                        EVERYDAY<span style="color: var(--swiss-red); font-weight: 900;">AI</span><span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.45em; vertical-align: top; margin-left: 0.15em; letter-spacing: 0.1em;"> BY ABE AND HEHJUN</span>
+                        DESIGN <span style="color: var(--swiss-red); font-weight: 900;">GALLERY</span>
                     </span>
+                    <!-- Tagline underneath -->
+                    <span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.5rem; letter-spacing: 0.1em; margin-top: 0.25rem; line-height: 1;">WHERE STUDENT VISION MEETS WEB INNOVATION</span>
                 </a>
 
                 <!-- Desktop Navigation - Swiss Minimal -->
-                <ul class="hidden lg:flex items-center" style="gap: var(--space-3xl);">
+                <ul class="hidden lg:flex items-center" style="gap: var(--space-3xl); align-items: center;">
                     <li>
                         <a href="/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if page.url == '/' %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
                             <span>Home</span>
                             {% if page.url == '/' %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
                         </a>
                     </li>
-                    <li>
-                        <a href="/blog/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/blog/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
+                    <li style="display: flex; align-items: center;">
+                        <a href="/blog/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/blog/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s; display: flex; align-items: center;">
                             <span>Style Gallery</span>
                             {% if '/blog/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
                         </a>
                     </li>
-                    <li>
-                        <a href="/submit-style-guide/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/submit-style-guide/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
+                    <li style="display: flex; align-items: center;">
+                        <a href="/submit-style-guide/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/submit-style-guide/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s; display: flex; align-items: center;">
                             <span>Submit</span>
                             {% if '/submit-style-guide/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
                         </a>
                     </li>
-                    <li>
-                        <a href="/track-submission/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/track-submission/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
+                    <li style="display: flex; align-items: center;">
+                        <a href="/track-submission/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/track-submission/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s; display: flex; align-items: center;">
                             <span>Track</span>
                             {% if '/track-submission/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
                         </a>
                     </li>
-                    <li>
-                        <a href="/who-is-this-for/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/who-is-this-for/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
+                    <li style="display: flex; align-items: center;">
+                        <a href="/who-is-this-for/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/who-is-this-for/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s; display: flex; align-items: center;">
                             <span>Who Is This For</span>
                             {% if '/who-is-this-for/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
                         </a>
@@ -201,7 +203,7 @@
                 </ul>
 
                 <!-- Review Mode Toggle - Desktop -->
-                <div class="hidden lg:flex items-center" style="gap: 1rem;">
+                <div class="hidden lg:flex items-center" style="gap: 1rem; margin-left: 3rem;">
                     <a href="/review/" id="reviewLinkDesktop" class="font-bold uppercase tracking-wider" style="display: none; font-size: 0.75rem; color: var(--swiss-red); letter-spacing: 0.15em; text-decoration: none; padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 4px; transition: all 0.2s;">
                         <span>🔍 Review</span>
                     </a>
@@ -365,7 +367,7 @@
                                 EVERYDAY<span style="color: var(--swiss-red); font-weight: 900;">AI</span>
                             </span>
                             <span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.1em; display: block; margin-top: 0.5rem; text-transform: uppercase;">
-                                BY ABE AND HEHJUN
+                                Where Student Vision Meets Web Innovation
                             </span>
                         </div>
                         <p class="leading-relaxed" style="color: var(--swiss-gray-400); max-width: 400px; line-height: 1.8;">
