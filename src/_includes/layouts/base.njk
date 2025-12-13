@@ -175,12 +175,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/projects/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/projects/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
-                            <span>Projects</span>
-                            {% if '/projects/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
-                        </a>
-                    </li>
-                    <li>
                         <a href="/submit-style-guide/" class="font-bold uppercase tracking-wider relative" style="font-size: 0.75rem; color: {% if '/submit-style-guide/' in page.url %}var(--swiss-red){% else %}var(--swiss-black){% endif %}; letter-spacing: 0.15em; transition: color 0.2s;">
                             <span>Submit</span>
                             {% if '/submit-style-guide/' in page.url %}<span style="position: absolute; bottom: -8px; left: 0; width: 100%; height: 2px; background-color: var(--swiss-red);"></span>{% endif %}
@@ -273,21 +267,11 @@
                     </li>
                     <li class="mb-6" style="border-top: 1px solid var(--swiss-gray-300); padding-top: 1.5rem;">
                         <a 
-                            href="/projects/" 
-                            class="block font-bold uppercase tracking-wider"
-                            style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if '/projects/' in page.url %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
-                        >
-                            <span style="display: block; margin-bottom: 0.25rem;">03</span>
-                            <span>Projects</span>
-                        </a>
-                    </li>
-                    <li class="mb-6" style="border-top: 1px solid var(--swiss-gray-300); padding-top: 1.5rem;">
-                        <a 
                             href="/blog/submit-style-guide/" 
                             class="block font-bold uppercase tracking-wider"
                             style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if '/blog/submit-style-guide/' in page.url %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
                         >
-                            <span style="display: block; margin-bottom: 0.25rem;">04</span>
+                            <span style="display: block; margin-bottom: 0.25rem;">03</span>
                             <span>Style Submission</span>
                         </a>
                     </li>
@@ -297,7 +281,7 @@
                             class="block font-bold uppercase tracking-wider"
                             style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if '/contact/' in page.url %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
                         >
-                            <span style="display: block; margin-bottom: 0.25rem;">05</span>
+                            <span style="display: block; margin-bottom: 0.25rem;">04</span>
                             <span>Contact</span>
                         </a>
                     </li>
@@ -307,7 +291,7 @@
                             class="block font-bold uppercase tracking-wider"
                             style="font-size: clamp(1.5rem, 5vw, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; {% if page.url == '/about/' %}color: var(--swiss-red); transform: translateX(0.5rem);{% else %}color: var(--swiss-black);{% endif %} transition: all 0.2s;"
                         >
-                            <span style="display: block; margin-bottom: 0.25rem;">06</span>
+                            <span style="display: block; margin-bottom: 0.25rem;">05</span>
                             <span>About</span>
                         </a>
                     </li>
@@ -339,7 +323,7 @@
     </main>
 
     <!-- Swiss International Typographic Style Footer -->
-    <footer data-component="footer" data-testid="main-footer" class="no-print" style="background-color: var(--swiss-black); color: var(--swiss-white); border-top: 3px solid var(--swiss-red);">
+    <footer data-component="footer" data-testid="main-footer" class="no-print" style="background-color: #365d9f; color: var(--swiss-white); border-top: 3px solid var(--swiss-red);">
         <div style="max-width: 1440px; margin: 0 auto; padding-left: var(--swiss-grid-margin); padding-right: var(--swiss-grid-margin);">
             <!-- Main Footer Content - Swiss Grid -->
             <div class="grid grid-cols-1 md:grid-cols-12" style="padding-top: var(--space-5xl); padding-bottom: var(--space-4xl); gap: var(--space-3xl); border-bottom: 1px solid var(--swiss-gray-700);">
