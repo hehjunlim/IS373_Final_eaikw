@@ -1,0 +1,92 @@
+[
+  {
+    "id": "sub_001",
+    "submittedAt": "2025-12-10T14:32:00Z",
+    "status": "pending",
+    "styleName": "Neon Cyber",
+    "submitterName": "Alex Johnson",
+    "submitterEmail": "alex.j@example.com",
+    "description": "A cyberpunk-inspired design system featuring neon colors, glitch effects, and futuristic typography. Built for dark-mode first experiences.",
+    "demoUrl": "https://neoncyber.demo.com",
+    "screenshotUrl": "/images/submissions/neon-cyber-preview.jpg",
+    "tags": ["cyberpunk", "dark-mode", "neon", "futuristic"],
+    "colorPalette": {
+      "primary": "#FF00FF",
+      "secondary": "#00FFFF",
+      "accent": "#FFFF00",
+      "background": "#0A0A0A"
+    }
+  },
+  {
+    "id": "sub_002",
+    "submittedAt": "2025-12-11T09:15:00Z",
+    "status": "pending",
+    "styleName": "Organic Earth",
+    "submitterName": "Maria Santos",
+    "submitterEmail": "maria.santos@example.com",
+    "description": "Nature-inspired design system with earthy tones, organic shapes, and sustainable design principles. Perfect for eco-conscious brands.",
+    "demoUrl": "https://organicearth.demo.com",
+    "screenshotUrl": "/images/submissions/organic-earth-preview.jpg",
+    "tags": ["organic", "natural", "sustainable", "earthy"],
+    "colorPalette": {
+      "primary": "#8B7355",
+      "secondary": "#A8C686",
+      "accent": "#D4A574",
+      "background": "#F5F1ED"
+    }
+  },
+  {
+    "id": "sub_003",
+    "submittedAt": "2025-12-12T16:45:00Z",
+    "status": "pending",
+    "styleName": "Retro Wave",
+    "submitterName": "David Kim",
+    "submitterEmail": "dkim@example.com",
+    "description": "80s-inspired design system with vibrant gradients, geometric patterns, and retro typography. Nostalgic yet modern aesthetic.",
+    "demoUrl": "https://retrowave.demo.com",
+    "screenshotUrl": "/images/submissions/retro-wave-preview.jpg",
+    "tags": ["retro", "80s", "synthwave", "vibrant"],
+    "colorPalette": {
+      "primary": "#FF6EC7",
+      "secondary": "#7B2FBE",
+      "accent": "#00D9FF",
+      "background": "#1A1A2E"
+    }
+  },
+  {
+    "id": "sub_004",
+    "submittedAt": "2025-12-13T08:20:00Z",
+    "status": "pending",
+    "styleName": "Minimal Glass",
+    "submitterName": "Sophie Chen",
+    "submitterEmail": "sophie.c@example.com",
+    "description": "Ultra-minimal glassmorphism design system with frosted glass effects, soft shadows, and subtle gradients. Clean and modern.",
+    "demoUrl": "https://minimalglass.demo.com",
+    "screenshotUrl": "/images/submissions/minimal-glass-preview.jpg",
+    "tags": ["minimal", "glassmorphism", "modern", "clean"],
+    "colorPalette": {
+      "primary": "#667EEA",
+      "secondary": "#764BA2",
+      "accent": "#F093FB",
+      "background": "#FFFFFF"
+    }
+  },
+  {
+    "id": "sub_005",
+    "submittedAt": "2025-12-13T11:10:00Z",
+    "status": "approved",
+    "styleName": "Industrial Tech",
+    "submitterName": "James Park",
+    "submitterEmail": "jpark@example.com",
+    "description": "Industrial design system inspired by modern manufacturing. Features bold typography, metal textures, and utilitarian aesthetics.",
+    "demoUrl": "https://industrialtech.demo.com",
+    "screenshotUrl": "/images/submissions/industrial-tech-preview.jpg",
+    "tags": ["industrial", "tech", "utilitarian", "bold"],
+    "colorPalette": {
+      "primary": "#2C3E50",
+      "secondary": "#95A5A6",
+      "accent": "#E74C3C",
+      "background": "#ECF0F1"
+    }
+  }
+]

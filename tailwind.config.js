@@ -32,8 +32,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["Fira Code", "monospace"],
+        sans: ["EB Garamond", "Georgia", "serif"],
+        serif: ["EB Garamond", "Georgia", "serif"],
+        heading: ["Montserrat", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["Courier New", "Courier", "monospace"],
       },
       typography: (theme) => ({
         DEFAULT: {

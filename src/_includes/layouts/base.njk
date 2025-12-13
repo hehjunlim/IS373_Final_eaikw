@@ -61,9 +61,9 @@
     {# Fonts #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"></noscript>
     
     {# RSS Feed #}
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS Feed" href="{{ site.url }}/feed.xml">
@@ -200,6 +200,18 @@
                     </li>
                 </ul>
 
+                <!-- Review Mode Toggle - Desktop -->
+                <div class="hidden lg:flex items-center" style="gap: 1rem;">
+                    <a href="/review/" id="reviewLinkDesktop" class="font-bold uppercase tracking-wider" style="display: none; font-size: 0.75rem; color: var(--swiss-red); letter-spacing: 0.15em; text-decoration: none; padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 4px; transition: all 0.2s;">
+                        <span>🔍 Review</span>
+                    </a>
+                    <span class="text-xs uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600);">Review Mode</span>
+                    <label class="review-toggle">
+                        <input type="checkbox" id="reviewModeToggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
                 <!-- Swiss Hamburger Menu Button - Refined Elegance -->
                 <button 
                     type="button" 
@@ -300,6 +312,23 @@
                 <!-- Swiss Divider -->
                 <div style="border-top: 2px solid var(--swiss-black); margin: 2rem 0;"></div>
 
+                <!-- Review Mode Toggle - Mobile -->
+                <div style="padding: 1.5rem; background: var(--swiss-gray-100); border-radius: 8px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                        <span class="text-sm uppercase tracking-wider font-bold" style="color: var(--swiss-gray-600);">Review Mode</span>
+                        <label class="review-toggle">
+                            <input type="checkbox" id="reviewModeToggleMobile" />
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--swiss-gray-600); line-height: 1.4;">
+                        Enable to access submission review dashboard
+                    </p>
+                    <a href="/review/" id="reviewLink" style="display: none; margin-top: 1rem; padding: 0.75rem; background: var(--swiss-red); color: white; text-align: center; border-radius: 4px; font-weight: bold; text-decoration: none; display: block;">
+                        → Review Submissions
+                    </a>
+                </div>
+
                 <!-- Additional Info -->
                 <div style="padding-left: 1.5rem;">
                     <p class="text-xs uppercase tracking-widest font-bold mb-2" style="color: var(--swiss-gray-600); letter-spacing: 0.15em;">
@@ -325,104 +354,57 @@
     <!-- Swiss International Typographic Style Footer -->
     <footer data-component="footer" data-testid="main-footer" class="no-print" style="background-color: #365d9f; color: var(--swiss-white); border-top: 3px solid var(--swiss-red);">
         <div style="max-width: 1440px; margin: 0 auto; padding-left: var(--swiss-grid-margin); padding-right: var(--swiss-grid-margin);">
-            <!-- Main Footer Content - Swiss Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-12" style="padding-top: var(--space-5xl); padding-bottom: var(--space-4xl); gap: var(--space-3xl); border-bottom: 1px solid var(--swiss-gray-700);">
+            <!-- Main Footer Content - Two Column Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2" style="padding-top: var(--space-5xl); padding-bottom: var(--space-5xl); gap: clamp(4rem, 10vw, 8rem); border-bottom: 1px solid var(--swiss-gray-700);">
                 <!-- Brand Column -->
-                <div class="md:col-span-5">
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
                     <!-- Swiss Logo/Wordmark - Footer Version -->
-                    <div style="line-height: 1; margin-bottom: var(--space-xl);">
-                        <span class="font-black" style="font-size: var(--fluid-h2); color: var(--swiss-white); letter-spacing: -0.03em; line-height: 1; display: block;">
-                            EVERYDAY<span style="color: var(--swiss-red); font-weight: 900;">AI</span>
-                        </span>
-                        <span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.1em; display: block; margin-top: 0.5rem; text-transform: uppercase;">
-                            BY ABE AND HEHJUN
-                        </span>
+                    <div>
+                        <div style="line-height: 1; margin-bottom: var(--space-2xl);">
+                            <span class="font-black" style="font-size: var(--fluid-h2); color: var(--swiss-white); letter-spacing: -0.03em; line-height: 1; display: block;">
+                                EVERYDAY<span style="color: var(--swiss-red); font-weight: 900;">AI</span>
+                            </span>
+                            <span style="color: var(--swiss-gray-500); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.1em; display: block; margin-top: 0.5rem; text-transform: uppercase;">
+                                BY ABE AND HEHJUN
+                            </span>
+                        </div>
+                        <p class="leading-relaxed" style="color: var(--swiss-gray-400); max-width: 400px; line-height: 1.8;">
+                            {{ site.description }}
+                        </p>
                     </div>
-                    <p class="leading-relaxed" style="color: var(--swiss-gray-400); max-width: 400px;">
-                        {{ site.description }}
-                    </p>
                 </div>
 
                 <!-- Navigation as Definition List - Very Swiss -->
-                <div class="md:col-span-4">
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
                     <dl>
                         <dt class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-500); margin-bottom: var(--space-lg); letter-spacing: 0.15em;">
                             Navigation
                         </dt>
                         <dd>
-                            <ul style="display: flex; flex-direction: column; gap: var(--space-md);">
-                                <li><a href="/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Home</a></li>
-                                <li><a href="/blog/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Style Gallery</a></li>
-                                <li><a href="/projects/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Projects</a></li>
-                                <li><a href="/blog/submit-style-guide/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Style Submission</a></li>
-                                <li><a href="/contact/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Contact</a></li>
-                                <li><a href="/about/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">About</a></li>
-                                <li><a href="/privacy-policy/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s;">Privacy Policy</a></li>
-                                <li><a href="/about-site/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s;">About this Site</a></li>
+                            <ul style="display: flex; flex-direction: column; gap: clamp(0.75rem, 1.5vw, 1rem);">
+                                <li><a href="/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">Home</a></li>
+                                <li><a href="/blog/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">Style Gallery</a></li>
+                                <li><a href="/projects/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">Projects</a></li>
+                                <li><a href="/blog/submit-style-guide/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">Style Submission</a></li>
+                                <li><a href="/contact/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">Contact</a></li>
+                                <li><a href="/about/" class="font-medium hover:underline" style="color: var(--swiss-white); transition: color 0.2s; font-size: 0.95rem;">About</a></li>
+                                <li style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1);"><a href="/privacy-policy/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s; font-size: 0.875rem;">Privacy Policy</a></li>
+                                <li><a href="/about-site/" class="font-medium hover:underline" style="color: var(--swiss-gray-400); transition: color 0.2s; font-size: 0.875rem;">About this Site</a></li>
                             </ul>
-                        </dd>
-                    </dl>
-                </div>
-
-                <!-- Social Links -->
-                <div class="md:col-span-3">
-                    <dl>
-                        <dt class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-500); margin-bottom: var(--space-lg); letter-spacing: 0.15em;">
-                            Connect
-                        </dt>
-                        <dd>
-                            <div class="flex" style="gap: var(--space-lg);">
-                            {% if site.social.github %}
-                            <a href="{{ site.social.github }}" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="GitHub"
-                               style="color: var(--swiss-gray-400); transition: color 0.2s;"
-                               class="hover:text-white">
-                                <svg style="height: 24px; width: 24px;" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                            </a>
-                            {% endif %}
-                            {% if site.social.linkedin %}
-                            <a href="{{ site.social.linkedin }}" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="LinkedIn"
-                               style="color: var(--swiss-gray-400); transition: color 0.2s;"
-                               class="hover:text-white">
-                                <svg style="height: 24px; width: 24px;" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                            </a>
-                            {% endif %}
-                            {% if site.social.twitter %}
-                            <a href="{{ site.social.twitter }}" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               aria-label="Twitter"
-                               style="color: var(--swiss-gray-400); transition: color 0.2s;"
-                               class="hover:text-white">
-                                <svg style="height: 24px; width: 24px;" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                                </svg>
-                            </a>
-                            {% endif %}
-                        </div>
                         </dd>
                     </dl>
                 </div>
             </div>
 
             <!-- Copyright Bar - Swiss Minimal -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
                 <div>
-                    <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-500); letter-spacing: 0.15em;">
+                    <p class="text-xs uppercase tracking-widest font-bold" style="color: var(--swiss-gray-500); letter-spacing: 0.15em; line-height: 1.6;">
                         &copy; {{ '' | currentYear }} {{ site.author }}
                     </p>
                 </div>
                 <div class="md:text-right">
-                    <p class="text-xs" style="color: var(--swiss-gray-500);">
+                    <p class="text-xs" style="color: var(--swiss-gray-500); line-height: 1.6;">
                         Built with 
                         <a href="https://www.11ty.dev/" target="_blank" rel="noopener noreferrer" class="font-bold hover:underline" style="color: var(--swiss-white); transition: color 0.2s;">Eleventy</a> 
                         / 
@@ -524,6 +506,164 @@
     >
         🍪
     </button>
+
+    <!-- Review Mode Toggle Styles and Script -->
+    <style>
+        .review-toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .review-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--swiss-gray-300);
+            transition: 0.3s;
+            border-radius: 26px;
+            border: 2px solid var(--swiss-black);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: var(--swiss-black);
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .review-toggle input:checked + .toggle-slider {
+            background-color: var(--swiss-red);
+        }
+
+        .review-toggle input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+            background-color: var(--swiss-white);
+        }
+
+        .review-toggle input:focus + .toggle-slider {
+            box-shadow: 0 0 1px var(--swiss-red);
+        }
+
+        /* Review mode indicator badge */
+        .review-mode-badge {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--swiss-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 40;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .review-mode-active .review-mode-badge {
+            display: block;
+        }
+    </style>
+
+    <!-- Review Mode Badge -->
+    <div class="review-mode-badge no-print">
+        🔍 Review Mode Active
+    </div>
+
+    <script>
+        // Review Mode functionality
+        (function() {
+            const desktopToggle = document.getElementById('reviewModeToggle');
+            const mobileToggle = document.getElementById('reviewModeToggleMobile');
+            const reviewLink = document.getElementById('reviewLink');
+            const reviewLinkDesktop = document.getElementById('reviewLinkDesktop');
+            
+            // Check initial state from localStorage
+            const isReviewMode = localStorage.getItem('reviewMode') === 'true';
+            
+            function updateReviewMode(enabled) {
+                localStorage.setItem('reviewMode', enabled);
+                
+                // Update both toggles
+                if (desktopToggle) desktopToggle.checked = enabled;
+                if (mobileToggle) mobileToggle.checked = enabled;
+                
+                // Show/hide review links
+                if (reviewLink) {
+                    reviewLink.style.display = enabled ? 'block' : 'none';
+                }
+                if (reviewLinkDesktop) {
+                    reviewLinkDesktop.style.display = enabled ? 'flex' : 'none';
+                }
+                
+                // Toggle body class for badge
+                if (enabled) {
+                    document.body.classList.add('review-mode-active');
+                } else {
+                    document.body.classList.remove('review-mode-active');
+                }
+                
+                // Dispatch custom event for other pages to listen
+                window.dispatchEvent(new Event('reviewModeChange'));
+            }
+            
+            // Initialize on page load
+            updateReviewMode(isReviewMode);
+            
+            // Add event listeners
+            if (desktopToggle) {
+                desktopToggle.addEventListener('change', function() {
+                    updateReviewMode(this.checked);
+                    
+                    // Show notification
+                    if (this.checked) {
+                        alert('Review Mode Enabled\n\nYou can now access the submission review dashboard at /review/');
+                    }
+                });
+            }
+            
+            if (mobileToggle) {
+                mobileToggle.addEventListener('change', function() {
+                    updateReviewMode(this.checked);
+                    
+                    // Show notification
+                    if (this.checked) {
+                        alert('Review Mode Enabled\n\nYou can now access the submission review dashboard.');
+                    }
+                });
+            }
+        })();
+    </script>
 
     <!-- Load Mobile Menu Script -->
     <script src="{{ '/js/mobile-menu.bundle.js' | baseUrl }}"></script>

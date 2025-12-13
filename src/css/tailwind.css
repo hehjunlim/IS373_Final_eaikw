@@ -408,7 +408,8 @@
     height: auto;
     margin-top: 2em;
     margin-bottom: 2em;
-    border: 2px solid var(--swiss-black);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
   }
 
   .prose-swiss table {
@@ -525,8 +526,14 @@
     --swiss-gray-700: #404040;
     --swiss-gray-800: #262626;
     --swiss-gray-900: #171717;
-    --swiss-red: #dacebb; /* Accent color - use sparingly */
-    --swiss-red-dark: #c9b8a3;
+    --swiss-red: #6e77aa; /* Accent color - use sparingly */
+    --swiss-red-dark: #5a6294;
+
+    /* Font Family Variables */
+    --font-sans: "EB Garamond", Georgia, serif;
+    --font-serif: "EB Garamond", Georgia, serif;
+    --font-heading: "Montserrat", system-ui, -apple-system, sans-serif;
+    --font-mono: "Courier New", Courier, monospace;
 
     /* Shadow System for depth hierarchy */
     --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -1075,4 +1082,90 @@
   .no-print {
     display: none !important;
   }
+}
+
+/* Custom Font Families */
+body,
+p,
+li,
+dd,
+dt,
+blockquote,
+figcaption,
+.text-base,
+.text-lg,
+.text-sm {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-bold,
+.font-black,
+.font-heading,
+button,
+.btn,
+[data-component="header"],
+[data-component="footer"],
+.uppercase,
+strong,
+b,
+.font-semibold {
+  font-family: var(--font-heading);
+}
+
+code,
+pre,
+kbd,
+samp,
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Rounded corners and softer borders for all box elements */
+div[style*="border:"],
+div[style*="border-left:"],
+div[style*="border-right:"],
+div[style*="border-top:"],
+div[style*="border-bottom:"],
+section[style*="border:"],
+article[style*="border:"],
+.card,
+.box,
+[class*="card"],
+[class*="box"],
+img,
+table,
+pre,
+code,
+blockquote,
+form,
+input,
+textarea,
+select,
+button {
+  border-radius: 8px;
+}
+
+/* Soften all borders */
+*[style*="border: 2px solid"],
+*[style*="border: 3px solid"],
+*[style*="border: 4px solid"] {
+  border-width: 1px !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Exception: keep header/footer borders as designed */
+[data-component="header"],
+[data-component="footer"] {
+  border-radius: 0;
+}
+
+/* Soften box shadows */
+*[style*="box-shadow"] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
 }
