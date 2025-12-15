@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/css/tailwind.css -o ./_site/css/main.css --minify",
-    "build:css:prod": "NODE_ENV=production npx tailwindcss -i ./src/css/tailwind.css -o ./_site/css/main.css --minify",
+    "build:css:prod": "cross-env NODE_ENV=production npx tailwindcss -i ./src/css/tailwind.css -o ./_site/css/main.css --minify",
     "build:js": "node build-alpine.js",
     "watch:css": "npx tailwindcss -i ./src/css/tailwind.css -o ./_site/css/main.css --watch",
     "watch:js": "node build-alpine.js --watch",
@@ -36,6 +36,10 @@
     "lint:fix": "npm-run-all lint:js:fix lint:css:fix lint:md:fix format",
     "prepare": "husky install",
     "validate": "npm-run-all lint:fix build test",
+    "sanity:dev": "sanity dev --port 3334",
+    "sanity:build": "sanity build",
+    "sanity:deploy": "sanity deploy",
+    "sanity:manage": "sanity manage",
     "docker:dev": "docker compose --profile dev up --build",
     "docker:prod": "docker compose --profile production up -d --build",
     "docker:stop": "docker compose --profile dev --profile production down",
@@ -64,6 +68,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "alpinejs": "^3.15.1",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^10.1.0",
     "esbuild": "^0.25.12",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
@@ -82,6 +87,14 @@
   },
   "dependencies": {
     "@11ty/eleventy-plugin-rss": "^2.0.4",
+    "@sanity/client": "^6.0.0",
+    "@sanity/vision": "^3.0.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.4.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.1.19",
     "web-vitals": "^5.1.0"
   }
 }
