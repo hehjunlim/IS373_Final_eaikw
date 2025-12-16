@@ -1,4 +1,5 @@
 import sanityClient from "@sanity/client";
+import { syncSubmissionToAirtable } from "./airtable-crm.js";
 
 const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID,
@@ -191,7 +192,26 @@ export async function updateSubmissionStatus(event) {
       };
     }
 
-    // Update submission
+    // Fetch current document to detect no-op and ensure idempotency
+    const current = await client.getDocument(submissionId);
+    if (!current) {
+      return {
+        statusCode: 404,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: "Submission not found" }),
+      };
+    }
+
+    if (current.status === status && (reviewNotes || "") === (current.reviewNotes || "")) {
+      // No change; idempotent-safe
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify({ success: true, message: "No changes" }),
+      };
+    }
+
+    // Update submission in Sanity
     const updated = await client
       .patch(submissionId)
       .set({
@@ -201,10 +221,35 @@ export async function updateSubmissionStatus(event) {
       })
       .commit();
 
-    // Send Discord notification for approvals
+    // Sync to Airtable (best-effort: log failures but do not fail the request)
+    try {
+      await syncSubmissionToAirtable(updated);
+    } catch (err) {
+      console.error("Airtable sync failed (non-fatal):", err);
+    }
+
+    // Send Discord notification for approvals (best-effort)
     if (status === "approved" && process.env.DISCORD_WEBHOOK_URL) {
-      const submission = await client.getDocument(submissionId);
-      await notifyDiscord(submission, "approved");
+      try {
+        const submission = await client.getDocument(submissionId);
+        await notifyDiscord(submission, "approved");
+      } catch (err) {
+        console.error("Discord notify failed (non-fatal):", err);
+      }
+    }
+
+    // Trigger site rebuild via build hook if configured
+    const buildHook =
+      process.env.ELEVENTY_BUILD_HOOK ||
+      process.env.NETLIFY_BUILD_HOOK ||
+      process.env.BUILD_HOOK_URL;
+    if (buildHook) {
+      try {
+        await fetch(buildHook, { method: "POST" });
+        console.log("Triggered build hook");
+      } catch (err) {
+        console.error("Build hook trigger failed (non-fatal):", err);
+      }
     }
 
     return {
@@ -226,26 +271,43 @@ export async function updateSubmissionStatus(event) {
  * Send Discord notification
  */
 async function notifyDiscord(submission, event) {
-  try {
-    const embed = {
-      title: event === "submitted" ? "📝 New Gallery Submission" : "✅ Submission Approved",
-      color: event === "submitted" ? 3447003 : 3066993,
-      fields: [
-        { name: "Submitter", value: submission.submitterName, inline: true },
-        { name: "Email", value: submission.submitterEmail, inline: true },
-        { name: "URL", value: `[View](${submission.url})`, inline: true },
-        { name: "Description", value: submission.description.substring(0, 100) + "..." },
-        { name: "Status", value: submission.status },
-      ],
-      timestamp: new Date().toISOString(),
-    };
+  const maxAttempts = 3;
+  const embed = {
+    title: event === "submitted" ? "📝 New Gallery Submission" : "✅ Submission Approved",
+    color: event === "submitted" ? 3447003 : 3066993,
+    fields: [
+      { name: "Submitter", value: submission.submitterName || "(unknown)", inline: true },
+      { name: "Design", value: submission.designStyle?.title || "(none)", inline: true },
+      { name: "Demo", value: submission.url || "(none)", inline: true },
+      { name: "Status", value: submission.status || event },
+    ],
+    timestamp: new Date().toISOString(),
+  };
 
-    await fetch(process.env.DISCORD_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ embeds: [embed] }),
-    });
-  } catch (error) {
-    console.error("Discord notification error:", error);
+  let attempt = 0;
+  while (attempt < maxAttempts) {
+    try {
+      attempt++;
+      const res = await fetch(process.env.DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ embeds: [embed] }),
+      });
+      if (res.ok) return;
+      const body = await res.text();
+      console.error(`Discord webhook responded ${res.status}: ${body}`);
+      // rate limited? inspect headers
+      const retryAfter = res.headers?.get?.("retry-after");
+      if (retryAfter) {
+        const wait = Number(retryAfter) * 1000 || 1000;
+        await new Promise((r) => setTimeout(r, wait));
+      } else {
+        await new Promise((r) => setTimeout(r, 200 * attempt));
+      }
+    } catch (error) {
+      console.error("Discord notification attempt failed:", error);
+      await new Promise((r) => setTimeout(r, 200 * (attempt + 1)));
+    }
   }
+  console.error("Discord notification failed after retries (non-fatal)");
 }

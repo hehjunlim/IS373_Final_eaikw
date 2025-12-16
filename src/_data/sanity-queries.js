@@ -3,12 +3,19 @@
  * Centralized queries for the Design Gallery platform
  */
 
+import "dotenv/config";
 import sanityClient from "@sanity/client";
 
-// Initialize client only if credentials are available
+// Lazy-initialized client. This ensures environment variables loaded by dotenv are
+// available when Eleventy imports data during build.
 let client = null;
 
-if (process.env.SANITY_PROJECT_ID) {
+function initClient() {
+  if (client) return;
+  if (!process.env.SANITY_PROJECT_ID) {
+    client = null;
+    return;
+  }
   try {
     client = sanityClient({
       projectId: process.env.SANITY_PROJECT_ID,
@@ -18,18 +25,24 @@ if (process.env.SANITY_PROJECT_ID) {
     });
   } catch (error) {
     console.warn("⚠️  Sanity CMS not configured. Set SANITY_PROJECT_ID in .env");
+    client = null;
   }
-} else {
-  console.warn("⚠️  Sanity CMS credentials not found. Using fallback data.");
+}
+
+function ensureClient() {
+  initClient();
+  if (!client) {
+    throw new Error(
+      "Sanity client is not configured. Set SANITY_PROJECT_ID and SANITY_DATASET in environment."
+    );
+  }
 }
 
 /**
  * Get all approved submissions
  */
 export async function getApprovedSubmissions() {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const submissions = await client.fetch(
       `*[_type == "gallerySubmission" && status == "approved"] | order(submittedAt desc) {
@@ -50,7 +63,7 @@ export async function getApprovedSubmissions() {
     return submissions;
   } catch (error) {
     console.error("Error fetching approved submissions:", error);
-    return [];
+    throw error;
   }
 }
 
@@ -58,9 +71,7 @@ export async function getApprovedSubmissions() {
  * Get pending submissions for review
  */
 export async function getPendingSubmissions() {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const submissions = await client.fetch(
       `*[_type == "gallerySubmission" && status == "submitted"] | order(submittedAt desc) {
@@ -77,7 +88,7 @@ export async function getPendingSubmissions() {
     return submissions;
   } catch (error) {
     console.error("Error fetching pending submissions:", error);
-    return [];
+    throw error;
   }
 }
 
@@ -85,9 +96,7 @@ export async function getPendingSubmissions() {
  * Get single submission
  */
 export async function getSubmission(id) {
-  if (!client) {
-    return null;
-  }
+  ensureClient();
   try {
     const submission = await client.fetch(
       `*[_type == "gallerySubmission" && _id == $id][0] {
@@ -112,7 +121,7 @@ export async function getSubmission(id) {
     return submission;
   } catch (error) {
     console.error("Error fetching submission:", error);
-    return null;
+    throw error;
   }
 }
 
@@ -120,9 +129,7 @@ export async function getSubmission(id) {
  * Get all design styles
  */
 export async function getDesignStyles() {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const styles = await client.fetch(
       `*[_type == "designStyle"] | order(title asc) {
@@ -141,7 +148,7 @@ export async function getDesignStyles() {
     return styles;
   } catch (error) {
     console.error("Error fetching design styles:", error);
-    return [];
+    throw error;
   }
 }
 
@@ -149,9 +156,7 @@ export async function getDesignStyles() {
  * Get single design style with related submissions
  */
 export async function getDesignStyle(slug) {
-  if (!client) {
-    return null;
-  }
+  ensureClient();
   try {
     const style = await client.fetch(
       `*[_type == "designStyle" && slug.current == $slug][0] {
@@ -180,7 +185,7 @@ export async function getDesignStyle(slug) {
     return style;
   } catch (error) {
     console.error("Error fetching design style:", error);
-    return null;
+    throw error;
   }
 }
 
@@ -188,9 +193,7 @@ export async function getDesignStyle(slug) {
  * Get all articles
  */
 export async function getArticles() {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const articles = await client.fetch(
       `*[_type == "article"] | order(publishedAt desc) {
@@ -210,7 +213,7 @@ export async function getArticles() {
     return articles;
   } catch (error) {
     console.error("Error fetching articles:", error);
-    return [];
+    throw error;
   }
 }
 
@@ -218,9 +221,7 @@ export async function getArticles() {
  * Get single article
  */
 export async function getArticle(slug) {
-  if (!client) {
-    return null;
-  }
+  ensureClient();
   try {
     const article = await client.fetch(
       `*[_type == "article" && slug.current == $slug][0] {
@@ -244,7 +245,7 @@ export async function getArticle(slug) {
     return article;
   } catch (error) {
     console.error("Error fetching article:", error);
-    return null;
+    throw error;
   }
 }
 
@@ -252,9 +253,7 @@ export async function getArticle(slug) {
  * Get all authors
  */
 export async function getAuthors() {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const authors = await client.fetch(
       `*[_type == "author"] | order(name asc) {
@@ -270,7 +269,7 @@ export async function getAuthors() {
     return authors;
   } catch (error) {
     console.error("Error fetching authors:", error);
-    return [];
+    throw error;
   }
 }
 
@@ -278,9 +277,7 @@ export async function getAuthors() {
  * Get submission by email
  */
 export async function getSubmissionsByEmail(email) {
-  if (!client) {
-    return [];
-  }
+  ensureClient();
   try {
     const submissions = await client.fetch(
       `*[_type == "gallerySubmission" && submitterEmail == $email] | order(submittedAt desc) {
@@ -298,7 +295,35 @@ export async function getSubmissionsByEmail(email) {
     return submissions;
   } catch (error) {
     console.error("Error fetching submissions by email:", error);
-    return [];
+    throw error;
+  }
+}
+
+/**
+ * Get all submissions (admin / review mode)
+ */
+export async function getAllSubmissions() {
+  ensureClient();
+  try {
+    const submissions = await client.fetch(
+      `*[_type == "gallerySubmission"] | order(submittedAt desc) {
+        _id,
+        submitterName,
+        submitterEmail,
+        url,
+        description,
+        status,
+        submittedAt,
+        reviewNotes,
+        reviewedAt,
+        "screenshot": screenshot.asset->url,
+        "designStyle": designStyle->{ title, slug }
+      }`
+    );
+    return submissions;
+  } catch (error) {
+    console.error("Error fetching all submissions:", error);
+    throw error;
   }
 }
 
@@ -306,9 +331,7 @@ export async function getSubmissionsByEmail(email) {
  * Get statistics
  */
 export async function getStatistics() {
-  if (!client) {
-    return null;
-  }
+  ensureClient();
   try {
     const stats = await client.fetch(`{
       "totalSubmissions": count(*[_type == "gallerySubmission"]),
@@ -322,15 +345,7 @@ export async function getStatistics() {
     return stats;
   } catch (error) {
     console.error("Error fetching statistics:", error);
-    return {
-      totalSubmissions: 0,
-      approvedCount: 0,
-      pendingCount: 0,
-      rejectedCount: 0,
-      articleCount: 0,
-      styleCount: 0,
-      authorCount: 0,
-    };
+    throw error;
   }
 }
 
@@ -344,5 +359,6 @@ export default {
   getArticle,
   getAuthors,
   getSubmissionsByEmail,
+  getAllSubmissions,
   getStatistics,
 };
