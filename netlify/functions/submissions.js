@@ -102,19 +102,32 @@ exports.handler = async (event, _context) => {
       // Generate confirmation number
       const confirmationNumber = "DSG-" + crypto.randomBytes(4).toString("hex").toUpperCase();
 
+      // Map form fields to Airtable fields
+      const name = data.submitterName || data.name;
+      const email = data.submitterEmail || data.email;
+      const designStyle = data.styleGuideName || data.designStyle;
+      const demoUrl = data.styleGuideUrl || data.demoUrl || "";
+      const description = data.description || "";
+      const technologies = data.technologies || data.toolsUsed || "";
+      const liveExampleUrl = data.liveExampleUrl || "";
+      const license = data.license || "";
+      const additionalNotes = data.additionalNotes || "";
+
       // Create record in Airtable
       await base(tableName).create([
         {
           fields: {
             ConfirmationNumber: confirmationNumber,
             Status: "pending",
-            Name: data.name,
-            Email: data.email,
-            DesignStyle: data.designStyle,
-            DemoURL: data.demoUrl || "",
-            Authenticity: data.authenticity || "",
-            ToolsUsed: data.toolsUsed || "",
-            AdditionalNotes: data.additionalNotes || "",
+            Name: name,
+            Email: email,
+            DesignStyle: designStyle,
+            DemoURL: demoUrl,
+            Description: description,
+            Technologies: technologies,
+            LiveExampleURL: liveExampleUrl,
+            License: license,
+            AdditionalNotes: additionalNotes,
             SubmittedDate: new Date().toISOString(),
           },
         },
@@ -123,10 +136,10 @@ exports.handler = async (event, _context) => {
       // Send Discord notification (non-blocking)
       const submissionData = {
         confirmationNumber,
-        name: data.name,
-        email: data.email,
-        designStyle: data.designStyle,
-        demoUrl: data.demoUrl,
+        name: name,
+        email: email,
+        designStyle: designStyle,
+        demoUrl: demoUrl,
       };
       sendDiscordNotification(submissionData).catch(console.error);
 
