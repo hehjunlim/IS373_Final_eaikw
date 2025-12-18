@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 test.describe("User Workflow - Submit and Track", () => {
   test("complete workflow: submit style guide and track submission @slow", async ({ page }) => {

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 // Simplified: Test only critical interactive functionality
 test.describe("Interactive Functionality", () => {

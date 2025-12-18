@@ -42,9 +42,10 @@ description: A curated library of design systems showcasing different aesthetic 
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem">
+      <div data-testid="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem">
         {# Nordic Minimalism Card #}
         <article
+          data-testid="submission-card"
           style="
             background: white;
             border: 1px solid var(--swiss-gray-300);
@@ -106,6 +107,7 @@ description: A curated library of design systems showcasing different aesthetic 
 
         {# Neo Brutalism Card #}
         <article
+          data-testid="submission-card"
           style="
             background: white;
             border: 1px solid var(--swiss-gray-300);
@@ -165,6 +167,7 @@ description: A curated library of design systems showcasing different aesthetic 
 
         {# Deconstructivism Card #}
         <article
+          data-testid="submission-card"
           style="
             background: white;
             border: 1px solid var(--swiss-gray-300);

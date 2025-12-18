@@ -169,3 +169,4 @@ $RECYCLE.BIN/
 .directory
 .Trash-*
 .nfs*
+playwright-report-analysis/

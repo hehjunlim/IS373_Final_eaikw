@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 // Simplified: Test only key responsive breakpoints
 test.describe("Responsive Layout Tests", () => {

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 test.describe("Gallery Functionality", () => {
   test("should display approved submissions in gallery", async ({ page }) => {

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 // Only run visual regression on chromium to catch real CSS issues
 test.describe("Component Visual Snapshots", () => {

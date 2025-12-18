@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 // Test only critical full-page views
 test.describe("Key Page Snapshots", () => {
