@@ -8,7 +8,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Live Form Submission Experience", () => {
   test("User submits design system and sees it in review mode", async ({ page }) => {
     // Step 1: Navigate to submission form
-    await page.goto("http://localhost:8080/blog/submit-style-guide/");
+    await page.goto("http://localhost:8765/blog/submit-style-guide/");
 
     // Wait for page to load
     await expect(page.locator("h1")).toBeVisible();
@@ -180,7 +180,7 @@ test.describe("Live Form Submission Experience", () => {
   });
 
   test("Visual regression: Form rendering", async ({ page }) => {
-    await page.goto("http://localhost:8080/blog/submit-style-guide/");
+    await page.goto("http://localhost:8765/blog/submit-style-guide/");
     await page.waitForLoadState("networkidle");
 
     // Test form is properly rendered
@@ -193,7 +193,7 @@ test.describe("Live Form Submission Experience", () => {
   });
 
   test("Form validation: Required fields", async ({ page }) => {
-    await page.goto("http://localhost:8080/blog/submit-style-guide/");
+    await page.goto("http://localhost:8765/blog/submit-style-guide/");
 
     // Try to submit empty form
     await page.click('button[type="submit"]');
@@ -211,7 +211,7 @@ test.describe("Live Form Submission Experience", () => {
 
   test("Review mode: Live data refresh", async ({ page }) => {
     // Navigate to review mode
-    await page.goto("http://localhost:8080/");
+    await page.goto("http://localhost:8765/");
     await page.click("#reviewModeToggle");
     await page.click("#reviewLinkDesktop, #reviewLink");
 
@@ -242,14 +242,14 @@ test.describe("Mobile Experience", () => {
     console.log("\n📱 Testing mobile experience...");
 
     // Test submission form on mobile
-    await page.goto("http://localhost:8080/blog/submit-style-guide/");
+    await page.goto("http://localhost:8765/blog/submit-style-guide/");
     await expect(page.locator("form")).toBeVisible();
 
     await page.screenshot({ path: "tests/screenshots/mobile-01-form.png", fullPage: true });
     console.log("✓ Screenshot: Mobile submission form");
 
     // Test review mode on mobile
-    await page.goto("http://localhost:8080/");
+    await page.goto("http://localhost:8765/");
 
     // Find mobile review toggle
     const mobileToggle = page.locator("#reviewModeToggleMobile, #reviewModeToggle");

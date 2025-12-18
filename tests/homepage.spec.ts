@@ -16,7 +16,7 @@ test.describe("Homepage Tests", () => {
 
   test("should have working navigation menu", async ({ page }) => {
     // Check navigation exists
-    const nav = page.locator("nav");
+    const nav = page.locator("header nav").first();
     await expect(nav).toBeVisible();
 
     // Check for key navigation links

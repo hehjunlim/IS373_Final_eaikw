@@ -194,7 +194,7 @@ test.describe("Event Registration Workflow", () => {
 
     // Look for success message or registration number
     const successIndicator = page.locator(
-      'text=/EVT-[A-Z0-9]{8}/, text=/success/i, [data-testid="success-message"]'
+      'text=/EVT-[A-Z0-9]{8}/, [data-testid="success-message"]'
     );
     const hasSuccess = (await successIndicator.count()) > 0;
     expect(hasSuccess).toBeTruthy();

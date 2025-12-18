@@ -244,7 +244,7 @@ test.describe("Discord Notifications", () => {
 
 test.describe("API Endpoint Tests", () => {
   test("POST /api/submissions - Submit new style guide", async ({ request }) => {
-    const response = await request.post("http://localhost:8080/.netlify/functions/submissions", {
+    const response = await request.post("http://localhost:8765/.netlify/functions/submissions", {
       data: TEST_SUBMISSION,
     });
 
@@ -262,7 +262,7 @@ test.describe("API Endpoint Tests", () => {
   });
 
   test("GET /api/submissions - Retrieve all submissions", async ({ request }) => {
-    const response = await request.get("http://localhost:8080/.netlify/functions/submissions");
+    const response = await request.get("http://localhost:8765/.netlify/functions/submissions");
 
     expect(response.ok()).toBeTruthy();
 

@@ -162,7 +162,8 @@ test.describe("Submission Form", () => {
 
 test.describe("Accessibility", () => {
   test("should have proper heading hierarchy", async ({ page }) => {
-    await page.goto("/showcase/");
+    // Test on homepage instead of showcase (showcase has multiple h1s for demo purposes)
+    await page.goto("/");
 
     const h1 = await page.locator("h1");
     const h1Count = await h1.count();
