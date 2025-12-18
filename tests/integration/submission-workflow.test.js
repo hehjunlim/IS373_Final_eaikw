@@ -147,7 +147,7 @@ test.describe("Complete Submission Workflow", () => {
     expect(cardText).toContain(TEST_SUBMISSION.email);
     expect(cardText).toContain(TEST_SUBMISSION.designStyle);
 
-    console.log(`✓ Submission visible in review mode`);
+    console.log("✓ Submission visible in review mode");
   });
 
   test("Step 4: Test approval workflow", async ({ page }) => {
@@ -178,7 +178,7 @@ test.describe("Complete Submission Workflow", () => {
 
     await expect(statusBadge).toContainText(/approved|published/i);
 
-    console.log(`✓ Submission approved successfully`);
+    console.log("✓ Submission approved successfully");
   });
 
   test("Step 5: Verify approval updated in Airtable", async () => {
@@ -191,7 +191,7 @@ test.describe("Complete Submission Workflow", () => {
     expect(record.fields.Status).toMatch(/approved|published/i);
     expect(record.fields.ReviewDate).toBeTruthy();
 
-    console.log(`✓ Approval status verified in Airtable`);
+    console.log("✓ Approval status verified in Airtable");
   });
 });
 
