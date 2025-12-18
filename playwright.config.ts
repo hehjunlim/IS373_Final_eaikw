@@ -28,10 +28,7 @@ export default defineConfig({
   grep: process.env.RUN_SLOW_TESTS ? undefined : /^(?!.*@slow)/,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-    ["html", { outputFolder: "playwright-report", open: "never" }],
-    ["list"],
-  ],
+  reporter: [["html", { outputFolder: "playwright-report", open: "never" }], ["list"]],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -53,7 +50,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { 
+      use: {
         ...devices["Desktop Chrome"],
         // Speed up by disabling video
         video: "off",
@@ -64,7 +61,7 @@ export default defineConfig({
 
     {
       name: "mobile",
-      use: { 
+      use: {
         ...devices["Pixel 5"],
         video: "off",
       },

@@ -24,8 +24,8 @@ test.describe("Interactive Functionality", () => {
   test("pages load correctly", async ({ page }) => {
     // Simple smoke test for key pages
     await page.goto("/");
-    await expect(page.locator('h1')).toBeVisible();
-    
+    await expect(page.locator("h1")).toBeVisible();
+
     await page.goto("/blog/");
     await expect(page).toHaveURL(/\/blog\//);
   });

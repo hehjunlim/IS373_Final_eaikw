@@ -105,10 +105,23 @@ exports.handler = async (event, _context) => {
   // Handle POST - Submit new style guide
   if (event.httpMethod === "POST") {
     try {
+      console.log("📝 Submission received");
+      console.log("Raw body:", event.body);
+      console.log("Environment check:", {
+        hasAirtableToken: !!process.env.AIRTABLE_API_TOKEN,
+        hasAirtableBase: !!process.env.AIRTABLE_BASE_ID,
+        hasDiscordWebhook: !!process.env.DISCORD_WEBHOOK_SUBMISSIONS,
+        tokenLength: process.env.AIRTABLE_API_TOKEN?.length,
+        baseIdLength: process.env.AIRTABLE_BASE_ID?.length,
+      });
+
       const data = JSON.parse(event.body);
+      console.log("Parsed data fields:", Object.keys(data));
+      console.log("Full data:", data);
 
       // Generate confirmation number
       const confirmationNumber = "DSG-" + crypto.randomBytes(4).toString("hex").toUpperCase();
+      console.log("Generated confirmation:", confirmationNumber);
 
       // Map form fields to Airtable fields
       const name = data.submitterName || data.name;
@@ -121,8 +134,23 @@ exports.handler = async (event, _context) => {
       const license = data.license || "";
       const additionalNotes = data.additionalNotes || "";
 
+      console.log("Mapped fields:", {
+        name,
+        email,
+        designStyle,
+        demoUrl,
+        description: description.substring(0, 50) + "...",
+        technologies,
+        liveExampleUrl,
+        license,
+      });
+
       // Create record in Airtable
-      await base(tableName).create([
+      console.log("📤 Attempting to create Airtable record...");
+      console.log("Table name:", tableName);
+      console.log("Base ID:", process.env.AIRTABLE_BASE_ID?.substring(0, 8) + "...");
+
+      const airtableRecord = await base(tableName).create([
         {
           fields: {
             ConfirmationNumber: confirmationNumber,
@@ -141,7 +169,10 @@ exports.handler = async (event, _context) => {
         },
       ]);
 
+      console.log("✅ Airtable record created:", airtableRecord[0].id);
+
       // Send Discord notification (non-blocking)
+      console.log("📨 Sending Discord notification...");
       const submissionData = {
         confirmationNumber,
         name: name,
@@ -149,8 +180,11 @@ exports.handler = async (event, _context) => {
         designStyle: designStyle,
         demoUrl: demoUrl,
       };
-      sendDiscordNotification(submissionData).catch(console.error);
+      sendDiscordNotification(submissionData).catch((err) => {
+        console.error("Discord notification failed:", err.message);
+      });
 
+      console.log("✅ Submission completed successfully");
       return {
         statusCode: 200,
         headers,
@@ -175,9 +209,10 @@ exports.handler = async (event, _context) => {
           success: false,
           error: "Failed to submit form. Please check that environment variables are configured.",
           details: error.message,
-          hint: !process.env.AIRTABLE_API_TOKEN || !process.env.AIRTABLE_BASE_ID 
-            ? "Missing Airtable credentials" 
-            : "Check Netlify function logs for details",
+          hint:
+            !process.env.AIRTABLE_API_TOKEN || !process.env.AIRTABLE_BASE_ID
+              ? "Missing Airtable credentials"
+              : "Check Netlify function logs for details",
         }),
       };
     }

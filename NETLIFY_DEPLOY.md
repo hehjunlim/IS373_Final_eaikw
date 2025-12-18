@@ -1,6 +1,8 @@
 # Deploying to Netlify
 
-This site includes backend functionality (form submissions, Airtable integration, Discord notifications) that requires Netlify Functions. Follow these steps to deploy:
+This site includes backend functionality (form submissions, Airtable
+integration, Discord notifications) that requires Netlify Functions. Follow
+these steps to deploy:
 
 ## Prerequisites
 
@@ -20,15 +22,19 @@ This site includes backend functionality (form submissions, Airtable integration
 In Netlify dashboard, go to **Site settings > Environment variables** and add:
 
 ### Required:
+
 - `AIRTABLE_API_TOKEN` - Your Airtable API token
 - `AIRTABLE_BASE_ID` - Your Airtable base ID
 
 ### Optional (for Discord notifications):
-- `DISCORD_WEBHOOK_SUBMISSIONS` - Discord webhook URL for submission notifications
+
+- `DISCORD_WEBHOOK_SUBMISSIONS` - Discord webhook URL for submission
+  notifications
 
 ## Step 3: Deploy
 
 Click "Deploy site" - Netlify will:
+
 1. Run `npm run build`
 2. Deploy the `_site` folder
 3. Set up serverless functions from `netlify/functions/`
@@ -36,6 +42,7 @@ Click "Deploy site" - Netlify will:
 ## Step 4: Update Custom Domain (Optional)
 
 If you want to keep using `www.eaikw.com`:
+
 1. In Netlify: Site settings > Domain management
 2. Add custom domain: `www.eaikw.com`
 3. Update your DNS records as instructed by Netlify
@@ -43,16 +50,14 @@ If you want to keep using `www.eaikw.com`:
 
 ## Features Enabled with Netlify
 
-✅ Form submissions stored in Airtable
-✅ Email confirmations
-✅ Discord notifications
-✅ Review dashboard with live data
-✅ Submission tracking
-✅ All Netlify Functions working
+✅ Form submissions stored in Airtable ✅ Email confirmations ✅ Discord
+notifications ✅ Review dashboard with live data ✅ Submission tracking ✅ All
+Netlify Functions working
 
 ## Alternative: Keep GitHub Pages + Add Backend
 
 If you prefer to keep GitHub Pages, you would need to:
+
 1. Deploy ONLY the functions to Netlify (as a separate app)
 2. Update form submission URLs to point to Netlify function URLs
 3. Configure CORS properly

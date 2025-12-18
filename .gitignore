@@ -170,3 +170,6 @@ $RECYCLE.BIN/
 .Trash-*
 .nfs*
 playwright-report-analysis/
+
+# Local Netlify folder
+.netlify
