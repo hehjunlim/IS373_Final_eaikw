@@ -164,7 +164,7 @@ exports.handler = async (event, _context) => {
         "Live Example URL": liveExampleUrl, // Changed from LiveExampleURL
         License: license,
         "Additional Notes": additionalNotes, // Changed from AdditionalNotes
-        "Submitted Date": new Date().toISOString(), // Changed from SubmittedDate
+        "Submitted Date": new Date().toISOString().split('T')[0], // Format: YYYY-MM-DD for Airtable Date field
       };
 
       console.log("Attempting to create with fields:", Object.keys(airtableFields));
