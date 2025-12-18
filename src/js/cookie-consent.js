@@ -421,7 +421,7 @@ class CookieConsentManager {
 
       // Only log in development
       if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        console.log("✓ Analytics consent granted - GA4 tracking enabled");
+        console.warn("✓ Analytics consent granted - GA4 tracking enabled");
       }
     } else if (
       window.location.hostname === "localhost" ||

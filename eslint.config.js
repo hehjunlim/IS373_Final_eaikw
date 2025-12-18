@@ -32,6 +32,13 @@ export default [
       "keyword-spacing": "error",
     },
   },
+  // Allow console.log in test files, build scripts, and debugging utilities
+  {
+    files: ["tests/**/*.js", "test-*.js", "build-*.js", "netlify/functions/**/*.js"],
+    rules: {
+      "no-console": "off",
+    },
+  },
   {
     ignores: [
       "_site/**",

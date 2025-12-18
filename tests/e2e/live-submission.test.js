@@ -6,7 +6,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Live Form Submission Experience", () => {
-  test("User submits design system and sees it in review mode", async ({ page, context }) => {
+  test("User submits design system and sees it in review mode", async ({ page }) => {
     // Step 1: Navigate to submission form
     await page.goto("http://localhost:8080/blog/submit-style-guide/");
 
