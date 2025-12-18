@@ -2,7 +2,7 @@ import { test, expect } from "../fixtures";
 
 // Only run visual regression on chromium to catch real CSS issues
 // @visual - Skip in CI due to platform-specific snapshots
-test.describe("Component Visual Snapshots", () => {
+test.describe("Component Visual Snapshots @visual", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });

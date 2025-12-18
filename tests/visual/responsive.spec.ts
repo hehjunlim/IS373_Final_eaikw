@@ -2,7 +2,7 @@ import { test, expect } from "../fixtures";
 
 // Simplified: Test only key responsive breakpoints
 // @visual - Skip in CI due to platform-specific snapshots
-test.describe("Responsive Layout Tests", () => {
+test.describe("Responsive Layout Tests @visual", () => {
   test("homepage renders correctly on desktop", async ({ page }) => {
     await page.goto("/");
     await page.waitForTimeout(300);
