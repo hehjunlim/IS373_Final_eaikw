@@ -21,11 +21,20 @@ const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_SUBMISSIONS;
 // Send Discord notification
 async function sendDiscordNotification(submission) {
   if (!DISCORD_WEBHOOK_URL) {
-    console.log("Discord webhook not configured, skipping notification");
+    console.log("⚠️ Discord webhook not configured (DISCORD_WEBHOOK_SUBMISSIONS missing)");
+    console.log("To enable Discord notifications:");
+    console.log("1. Go to your Discord server settings");
+    console.log("2. Navigate to Integrations > Webhooks");
+    console.log("3. Create a new webhook for your submissions channel");
+    console.log("4. Copy the webhook URL");
+    console.log("5. Add it to Netlify: Site settings > Environment variables");
+    console.log("6. Name: DISCORD_WEBHOOK_SUBMISSIONS");
     return;
   }
 
   try {
+    console.log("📤 Sending Discord notification...");
+    
     const embed = {
       title: "🎨 New Style Guide Submission!",
       color: 3447003, // Blue
@@ -57,34 +66,48 @@ async function sendDiscordNotification(submission) {
           inline: false,
         },
         {
+          name: "📄 License",
+          value: submission.licenseType || "Not specified",
+          inline: true,
+        },
+        {
           name: "🎫 Confirmation Number",
           value: `\`${submission.confirmationNumber}\``,
           inline: true,
         },
         {
           name: "📅 Submitted",
-          value: new Date().toLocaleString(),
+          value: new Date().toLocaleString('en-US', { 
+            dateStyle: 'medium', 
+            timeStyle: 'short' 
+          }),
           inline: true,
         },
       ],
       footer: {
         text: "Design Gallery - Submission System",
+        icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
       },
       timestamp: new Date().toISOString(),
     };
 
-    await fetch(DISCORD_WEBHOOK_URL, {
+    const response = await fetch(DISCORD_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: "📬 **New submission received!**",
+        content: "📬 **New submission received!** @here",
         embeds: [embed],
       }),
     });
 
-    console.log("Discord notification sent successfully");
+    if (response.ok) {
+      console.log("✅ Discord notification sent successfully");
+    } else {
+      const errorText = await response.text();
+      console.error("❌ Discord notification failed:", response.status, errorText);
+    }
   } catch (error) {
-    console.error("Discord notification failed:", error);
+    console.error("❌ Discord notification error:", error.message);
     // Don't fail the submission if Discord notification fails
   }
 }
