@@ -1,6 +1,17 @@
 import sanityClient from "@sanity/client";
 import { syncSubmissionToAirtable } from "./airtable-crm.js";
 
+// Environment variable check on load
+console.log('🔧 sanity-submissions.js Environment check:', {
+  hasSanityProjectId: !!process.env.SANITY_PROJECT_ID,
+  hasSanityToken: !!process.env.SANITY_API_TOKEN,
+  hasSanityDataset: !!process.env.SANITY_DATASET,
+  hasDiscordWebhook: !!process.env.DISCORD_WEBHOOK_URL,
+  nodeEnv: process.env.NODE_ENV,
+  projectIdLength: process.env.SANITY_PROJECT_ID?.length,
+  tokenLength: process.env.SANITY_API_TOKEN?.length
+});
+
 const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET || "production",
@@ -38,31 +49,31 @@ export async function createSubmission(event) {
   }
 
   try {
-    console.log('📝 Sanity submission request:', {
+    console.log("📝 Sanity submission request:", {
       method: event.httpMethod,
       headers: event.headers,
-      queryParams: event.queryStringParameters
+      queryParams: event.queryStringParameters,
     });
-    console.log('Raw body:', event.body);
+    console.log("Raw body:", event.body);
 
     const data = JSON.parse(event.body);
-    console.log('Parsed data:', data);
+    console.log("Parsed data:", data);
 
     // Validate required fields
     const requiredFields = ["submitterName", "submitterEmail", "url", "description"];
     const missing = requiredFields.filter((field) => !data[field]);
     if (missing.length > 0) {
-      console.log('❌ Validation failed. Missing fields:', missing);
+      console.log("❌ Validation failed. Missing fields:", missing);
       return {
         statusCode: 400,
         headers: corsHeaders,
         body: JSON.stringify({ error: `Missing required fields: ${missing.join(", ")}` }),
       };
     }
-    console.log('✅ Validation passed');
+    console.log("✅ Validation passed");
 
     // Create submission document in Sanity
-    console.log('📤 Creating Sanity document...');
+    console.log("📤 Creating Sanity document...");
     const submission = await client.create({
       _type: "gallerySubmission",
       submitterName: data.submitterName,
@@ -72,17 +83,17 @@ export async function createSubmission(event) {
       status: "submitted",
       submittedAt: new Date().toISOString(),
     });
-    console.log('✅ Sanity document created:', submission._id);
+    console.log("✅ Sanity document created:", submission._id);
 
     // Call Discord webhook if configured
     if (process.env.DISCORD_WEBHOOK_URL) {
-      console.log('📨 Sending Discord notification...');
+      console.log("📨 Sending Discord notification...");
       await notifyDiscord(submission, "submitted");
     } else {
-      console.log('ℹ️ Discord webhook not configured, skipping notification');
+      console.log("ℹ️ Discord webhook not configured, skipping notification");
     }
 
-    console.log('✅ Submission completed successfully');
+    console.log("✅ Submission completed successfully");
 
     return {
       statusCode: 201,
@@ -97,18 +108,18 @@ export async function createSubmission(event) {
       }),
     };
   } catch (error) {
-    console.error('❌ Submission error:', error);
-    console.error('Error details:', {
+    console.error("❌ Submission error:", error);
+    console.error("Error details:", {
       message: error.message,
       stack: error.stack,
-      statusCode: error.statusCode
+      statusCode: error.statusCode,
     });
     return {
       statusCode: 500,
       headers: corsHeaders,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         error: "Failed to create submission",
-        details: error.message 
+        details: error.message,
       }),
     };
   }

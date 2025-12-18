@@ -1,6 +1,16 @@
 const crypto = require("crypto");
 const Airtable = require("airtable");
 
+// Environment variable check on load
+console.log('🔧 new-member.js Environment check:', {
+  hasAirtableToken: !!process.env.AIRTABLE_API_TOKEN,
+  hasAirtableBase: !!process.env.AIRTABLE_BASE_ID,
+  hasDiscordWebhook: !!process.env.DISCORD_WEBHOOK_INTRODUCTIONS,
+  nodeEnv: process.env.NODE_ENV,
+  tokenLength: process.env.AIRTABLE_API_TOKEN?.length,
+  baseIdLength: process.env.AIRTABLE_BASE_ID?.length
+});
+
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_TOKEN }).base(
   process.env.AIRTABLE_BASE_ID
@@ -102,22 +112,22 @@ exports.handler = async (event, _context) => {
   // Handle POST - Register new member
   if (event.httpMethod === "POST") {
     try {
-      console.log('👤 New member registration request:', {
+      console.log("👤 New member registration request:", {
         method: event.httpMethod,
         headers: event.headers,
-        queryParams: event.queryStringParameters
+        queryParams: event.queryStringParameters,
       });
-      console.log('Raw body:', event.body);
+      console.log("Raw body:", event.body);
 
       const data = JSON.parse(event.body);
-      console.log('Parsed data:', data);
+      console.log("Parsed data:", data);
 
       // Generate member ID
       const memberId = "MBR-" + crypto.randomBytes(4).toString("hex").toUpperCase();
-      console.log('Generated member ID:', memberId);
+      console.log("Generated member ID:", memberId);
 
       // Create record in Airtable
-      console.log('📤 Creating Airtable record in table:', tableName);
+      console.log("📤 Creating Airtable record in table:", tableName);
       const airtableRecord = await base(tableName).create([
         {
           fields: {
@@ -133,7 +143,7 @@ exports.handler = async (event, _context) => {
           },
         },
       ]);
-      console.log('✅ Airtable record created:', airtableRecord[0].id);
+      console.log("✅ Airtable record created:", airtableRecord[0].id);
 
       // Send Discord notification (non-blocking)
       const memberData = {
@@ -145,10 +155,10 @@ exports.handler = async (event, _context) => {
         website: data.website,
       };
       sendDiscordNotification(memberData).catch((err) => {
-        console.error('Discord notification failed:', err.message);
+        console.error("Discord notification failed:", err.message);
       });
 
-      console.log('✅ Member registration completed successfully');
+      console.log("✅ Member registration completed successfully");
       return {
         statusCode: 200,
         headers,

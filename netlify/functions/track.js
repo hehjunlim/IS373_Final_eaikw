@@ -1,5 +1,14 @@
 const Airtable = require("airtable");
 
+// Environment variable check on load
+console.log('🔧 track.js Environment check:', {
+  hasAirtableToken: !!process.env.AIRTABLE_API_TOKEN,
+  hasAirtableBase: !!process.env.AIRTABLE_BASE_ID,
+  nodeEnv: process.env.NODE_ENV,
+  tokenLength: process.env.AIRTABLE_API_TOKEN?.length,
+  baseIdLength: process.env.AIRTABLE_BASE_ID?.length
+});
+
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_TOKEN }).base(
   process.env.AIRTABLE_BASE_ID
@@ -30,19 +39,19 @@ exports.handler = async (event, _context) => {
   // Handle POST - Track submission by confirmation number
   if (event.httpMethod === "POST") {
     try {
-      console.log('🔍 Tracking request:', {
+      console.log("🔍 Tracking request:", {
         method: event.httpMethod,
         headers: event.headers,
-        queryParams: event.queryStringParameters
+        queryParams: event.queryStringParameters,
       });
-      console.log('Raw body:', event.body);
+      console.log("Raw body:", event.body);
 
       const data = JSON.parse(event.body);
       const confirmationNumber = data.confirmationNumber;
-      console.log('Searching for confirmation number:', confirmationNumber);
+      console.log("Searching for confirmation number:", confirmationNumber);
 
       if (!confirmationNumber) {
-        console.log('❌ Missing confirmation number');
+        console.log("❌ Missing confirmation number");
         return {
           statusCode: 400,
           headers,
@@ -54,7 +63,7 @@ exports.handler = async (event, _context) => {
       }
 
       // Find submission in Airtable
-      console.log('📤 Querying Airtable table:', tableName);
+      console.log("📤 Querying Airtable table:", tableName);
       const records = await base(tableName)
         .select({
           filterByFormula: `{ConfirmationNumber} = '${confirmationNumber}'`,
@@ -62,10 +71,10 @@ exports.handler = async (event, _context) => {
         })
         .all();
 
-      console.log('Query results:', records.length > 0 ? 'Found match' : 'No match found');
+      console.log("Query results:", records.length > 0 ? "Found match" : "No match found");
 
       if (records.length === 0) {
-        console.log('❌ Submission not found');
+        console.log("❌ Submission not found");
         return {
           statusCode: 404,
           headers,
