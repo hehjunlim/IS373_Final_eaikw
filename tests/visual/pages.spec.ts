@@ -1,6 +1,7 @@
 import { test, expect } from "../fixtures";
 
 // Test only critical full-page views
+// @visual - Skip in CI due to platform-specific snapshots
 test.describe("Key Page Snapshots", () => {
   test("homepage renders correctly", async ({ page }) => {
     await page.goto("/");

@@ -104,7 +104,9 @@ jobs:
         run: npm run build
 
       - name: Run Playwright tests
-        run: npm test
+        run: npm test -- --grep-invert "@visual"
+        env:
+          CI: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
