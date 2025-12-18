@@ -196,12 +196,10 @@ eleventyExcludeFromCollections: true
         document.getElementById('reviewModeDisabled').style.display = 'flex';
       }
     }
-  <script>
-    let allSubmissions = [];
 
-    // Load submissions on page load
+    // Call checkReviewMode on page load
     document.addEventListener('DOMContentLoaded', function() {
-      loadSubmissions();
+      checkReviewMode();
     });
 
     // Load submissions from API
