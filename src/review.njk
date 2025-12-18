@@ -207,11 +207,16 @@ eleventyExcludeFromCollections: true
     // Load submissions from API
     async function loadSubmissions() {
       try {
+        console.log('Fetching submissions from API...');
         const response = await fetch('/.netlify/functions/submissions');
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('Response data:', data);
         
         if (data.success) {
           allSubmissions = data.submissions;
+          console.log('Total submissions loaded:', allSubmissions.length);
+          console.log('Submissions:', allSubmissions);
           updateStats(allSubmissions);
           renderSubmissions(allSubmissions);
         } else {
@@ -219,6 +224,7 @@ eleventyExcludeFromCollections: true
           document.getElementById('submissionsList').innerHTML = `
             <div style="text-align: center; padding: 3rem; color: var(--swiss-red);">
               <p>Failed to load submissions. Please check console for details.</p>
+              <p style="font-size: 0.875rem; margin-top: 1rem;">Error: ${data.error}</p>
             </div>
           `;
         }
@@ -252,6 +258,7 @@ eleventyExcludeFromCollections: true
     // Render submissions
     function renderSubmissions(submissions) {
       const container = document.getElementById('submissionsList');
+      console.log('Rendering submissions, count:', submissions.length);
 
       if (submissions.length === 0) {
         container.innerHTML = `
@@ -262,7 +269,9 @@ eleventyExcludeFromCollections: true
         return;
       }
 
+      console.log('Rendering cards for submissions...');
       container.innerHTML = submissions.map(submission => renderSubmissionCard(submission)).join('');
+      console.log('Cards rendered successfully');
 
       // Attach filter functionality
       document.querySelectorAll('.filter-tab').forEach(tab => {
