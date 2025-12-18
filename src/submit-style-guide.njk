@@ -515,10 +515,24 @@ eleventyNavigation:
         }, 8000);
       } catch (error) {
         console.error("Submission error:", error);
-        showMessage(
-          "Sorry, there was an error submitting your form. Please try again or contact us directly.",
-          "error"
-        );
+        
+        // Try to get more details from the response
+        let errorMessage = "Sorry, there was an error submitting your form. Please try again or contact us directly.";
+        
+        try {
+          const errorData = await error.response?.json();
+          if (errorData?.details) {
+            errorMessage += ` Error: ${errorData.details}`;
+          }
+          if (errorData?.hint) {
+            errorMessage += ` (${errorData.hint})`;
+          }
+        } catch (e) {
+          // Couldn't parse error response
+          console.error("Could not parse error response:", e);
+        }
+        
+        showMessage(errorMessage, "error");
         submitButton.disabled = false;
         submitButton.textContent = originalButtonText;
       }

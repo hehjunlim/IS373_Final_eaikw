@@ -1,6 +1,14 @@
 const crypto = require("crypto");
 const Airtable = require("airtable");
 
+// Check environment variables
+if (!process.env.AIRTABLE_API_TOKEN) {
+  console.error("Missing AIRTABLE_API_TOKEN environment variable");
+}
+if (!process.env.AIRTABLE_BASE_ID) {
+  console.error("Missing AIRTABLE_BASE_ID environment variable");
+}
+
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_TOKEN }).base(
   process.env.AIRTABLE_BASE_ID
@@ -155,13 +163,21 @@ exports.handler = async (event, _context) => {
       };
     } catch (error) {
       console.error("Airtable submission error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        statusCode: error.statusCode,
+      });
       return {
-        statusCode: 400,
+        statusCode: 500,
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid submission data",
+          error: "Failed to submit form. Please check that environment variables are configured.",
           details: error.message,
+          hint: !process.env.AIRTABLE_API_TOKEN || !process.env.AIRTABLE_BASE_ID 
+            ? "Missing Airtable credentials" 
+            : "Check Netlify function logs for details",
         }),
       };
     }
