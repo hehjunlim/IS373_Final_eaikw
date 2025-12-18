@@ -385,220 +385,354 @@ description: Learn more about my background, skills, and experience
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 gap-8">
         {# Awwwards #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
+          {# Competitor - Faded #}
           <div
             style="
-              background: var(--swiss-black);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
+              transition: all 0.3s ease;
             "
           >
-            <h3 class="font-bold text-xl font-mono">Awwwards</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">Awwwards</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> Award-winning websites
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">Celebrates complete websites, not design systems</p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Showcases award-winning websites with emphasis
-              on creativity, design, and innovation.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> Awwwards celebrates complete websites,
-              while we focus specifically on style guides and design system documentation.
-            </p>
+
+          {# OUR ADVANTAGE - CENTER & PROMINENT #}
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Educational breakdowns and accessible for learning, not just inspiration.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Educational breakdowns and accessible learning resources specifically for design systems and style guides
+            </p>
+          </div>
+
+          {# Spacing #}
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs other platforms
           </div>
         </div>
 
         {# CSS Zen Garden #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
+          {# Competitor - Faded #}
           <div
             style="
-              background: var(--swiss-black);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
             "
           >
-            <h3 class="font-bold text-xl font-mono">CSS Zen Garden</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">CSS Zen Garden</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> CSS design showcase
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">
+              Technical showcase for CSS, not comprehensive systems
+            </p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Demonstrates CSS design possibilities through
-              visual redesigns of the same HTML structure.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> CSS Zen Garden is a technical showcase for
-              CSS capabilities, not a comprehensive design system resource.
-            </p>
+
+          {# OUR ADVANTAGE - CENTER & PROMINENT #}
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Complete design systems with typography, colors, components—not just CSS styling.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Complete design systems with typography, colors, and components—not just CSS styling
+            </p>
+          </div>
+
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs CSS-only tools
           </div>
         </div>
 
         {# Design History Sites #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
           <div
             style="
-              background: var(--swiss-black);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
             "
           >
-            <h3 class="font-bold text-xl font-mono">Design History Sites</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">Design History Sites</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> Historical archives
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">Look backward at design history</p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Archive and document historical design
-              movements, influential designers, and design evolution.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> These sites look backward at design
-              history, while we focus on current, practical design systems.
-            </p>
+
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Modern, actionable resources you can use in projects today.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Modern, actionable resources you can implement in projects today
+            </p>
+          </div>
+
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs history archives
           </div>
         </div>
 
         {# Dribbble #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
           <div
             style="
-              background: var(--swiss-red);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
             "
           >
-            <h3 class="font-bold text-xl font-mono">Dribbble</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">Dribbble</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> Design shots showcase
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">Shows isolated pieces, not complete systems</p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Community platform for designers to showcase
-              individual design shots and creative work.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> Dribbble shows isolated design pieces, not
-              complete documented systems.
-            </p>
+
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Comprehensive style guides with implementation details and usage guidelines.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Comprehensive style guides with complete implementation details and usage guidelines
+            </p>
+          </div>
+
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs design showcases
           </div>
         </div>
 
         {# Behance #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
           <div
             style="
-              background: var(--swiss-red);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
             "
           >
-            <h3 class="font-bold text-xl font-mono">Behance</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">Behance</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> Portfolio platform
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">All creative work, not specifically design systems</p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Portfolio platform for showcasing creative
-              projects across all design disciplines.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> Behance covers all creative work, not
-              specifically design systems or style guides.
-            </p>
+
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Curated, categorized focus on design systems makes finding relevant examples easier.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Curated, categorized focus exclusively on design systems—making relevant examples easy to find
+            </p>
+          </div>
+
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs general portfolios
           </div>
         </div>
 
         {# Style Guide Collections #}
-        <div style="border: 2px solid var(--swiss-black); background: var(--swiss-white); transition: all 0.3s ease">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--space-xl); align-items: center">
           <div
             style="
-              background: var(--swiss-red);
-              color: var(--swiss-white);
-              padding: var(--space-xl);
-              border-bottom: 2px solid var(--swiss-black);
+              border: 1px solid var(--swiss-gray-300);
+              background: var(--swiss-gray-50);
+              opacity: 0.5;
+              padding: var(--space-lg);
             "
           >
-            <h3 class="font-bold text-xl font-mono">Style Guide Lists</h3>
+            <h3 class="font-bold text-lg font-mono mb-3" style="color: var(--swiss-gray-600)">Style Guide Lists</h3>
+            <p class="text-xs leading-relaxed mb-2" style="color: var(--swiss-gray-500)">
+              <strong>Focus:</strong> Simple link directories
+            </p>
+            <p class="text-xs" style="color: var(--swiss-gray-500)">Basic collections, often outdated</p>
           </div>
-          <div style="padding: var(--space-xl)">
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Focus:</strong> Simple lists or directories of style guide links
-              without much context or curation.
-            </p>
-            <p class="text-sm leading-relaxed mb-4" style="color: var(--swiss-gray-700)">
-              <strong style="color: var(--swiss-black)">Difference:</strong> These are basic link collections that often
-              become outdated or lack organization.
-            </p>
+
+          <div
+            style="
+              border: 4px solid var(--swiss-red);
+              background: var(--swiss-white);
+              padding: var(--space-2xl);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+              transform: scale(1.05);
+              position: relative;
+              z-index: 10;
+            "
+          >
             <div
               style="
-                background: var(--swiss-gray-50);
-                padding: var(--space-md);
-                border-left: 3px solid var(--swiss-red);
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--swiss-red);
+                color: var(--swiss-white);
+                padding: 4px 16px;
+                font-size: 0.7rem;
+                font-weight: 900;
+                letter-spacing: 0.1em;
               "
             >
-              <p class="text-xs font-mono font-bold uppercase mb-2" style="color: var(--swiss-red)">Our Advantage</p>
-              <p class="text-sm" style="color: var(--swiss-gray-700)">
-                Active curation, categorization, detailed breakdowns, and community engagement.
-              </p>
+              ★ YOUR ADVANTAGE ★
             </div>
+            <p class="text-lg font-bold mb-3" style="color: var(--swiss-red); text-align: center">
+              Design Gallery
+            </p>
+            <p class="text-base leading-relaxed" style="color: var(--swiss-black); text-align: center; font-weight: 600">
+              Active curation, smart categorization, detailed breakdowns, and engaged community
+            </p>
+          </div>
+
+          <div style="opacity: 0.3; text-align: center; color: var(--swiss-gray-400); font-size: 0.75rem">
+            vs basic lists
           </div>
         </div>
       </div>
