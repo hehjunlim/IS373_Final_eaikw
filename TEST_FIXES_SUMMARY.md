@@ -10,7 +10,8 @@
 
 ### 1. Port Mismatch (12 occurrences)
 
-**Problem:** Tests were trying to connect to `localhost:8080` but the dev server runs on `localhost:8765`
+**Problem:** Tests were trying to connect to `localhost:8080` but the dev server
+runs on `localhost:8765`
 
 **Impact:**
 
@@ -19,9 +20,10 @@
 - 2 API endpoint tests failed
 
 **Fix:**
+
 ```javascript
 // Changed all occurrences:
-- http://localhost:8080 
+- http://localhost:8080
 + http://localhost:8765
 ```
 
@@ -34,7 +36,8 @@
 
 ### 2. Cookie Consent Banner Blocking Clicks
 
-**Problem:** Cookie banner intercepted pointer events, causing 5-second timeout failures
+**Problem:** Cookie banner intercepted pointer events, causing 5-second timeout
+failures
 
 **Impact:**
 
@@ -43,21 +46,25 @@
 - Interactive tests timing out
 
 **Fix:** Created `tests/fixtures.ts` with automatic cookie consent
+
 ```typescript
 export const test = base.extend({
   context: async ({ context }, use) => {
-    await context.addCookies([{
-      name: "cookie-consent",
-      value: "accepted",
-      domain: "localhost",
-      path: "/",
-    }]);
+    await context.addCookies([
+      {
+        name: "cookie-consent",
+        value: "accepted",
+        domain: "localhost",
+        path: "/",
+      },
+    ]);
     await use(context);
   },
 });
 ```
 
-**Note:** Tests need to import from `./fixtures` instead of `@playwright/test` to use this fix.
+**Note:** Tests need to import from `./fixtures` instead of `@playwright/test`
+to use this fix.
 
 ---
 
@@ -68,6 +75,7 @@ export const test = base.extend({
 **Impact:** Homepage navigation test failed
 
 **Fix:**
+
 ```typescript
 // Changed:
 - const nav = page.locator("nav");
@@ -78,15 +86,17 @@ export const test = base.extend({
 
 ### 4. Heading Hierarchy Test on Wrong Page
 
-**Problem:** Test checked `/showcase/` which intentionally has 3 h1 elements for typography demonstration
+**Problem:** Test checked `/showcase/` which intentionally has 3 h1 elements for
+typography demonstration
 
 **Impact:** Accessibility test failed expecting 1 h1, found 3
 
 **Fix:**
+
 ```typescript
 // Changed test page:
-- await page.goto("/showcase/");
-+ await page.goto("/");  // Homepage has proper single h1
+-(await page.goto("/showcase/"));
++(await page.goto("/")); // Homepage has proper single h1
 ```
 
 ---
@@ -98,10 +108,11 @@ export const test = base.extend({
 **Impact:** Event registration test crashed with SyntaxError
 
 **Fix:**
+
 ```typescript
 // Removed invalid syntax:
-- 'text=/EVT-[A-Z0-9]{8}/, text=/success/i, [data-testid="success-message"]'
-+ 'text=/EVT-[A-Z0-9]{8}/, [data-testid="success-message"]'
+-'text=/EVT-[A-Z0-9]{8}/, text=/success/i, [data-testid="success-message"]' +
+  'text=/EVT-[A-Z0-9]{8}/, [data-testid="success-message"]';
 ```
 
 ---
@@ -117,6 +128,7 @@ export const test = base.extend({
 - Page snapshots: homepage, blog
 
 **Resolution:** Run with `--update-snapshots` flag to generate baselines:
+
 ```bash
 npm test -- --update-snapshots
 ```
@@ -139,7 +151,8 @@ npm test -- --update-snapshots
 - API endpoint tests
 - Data flow validation
 
-**Note:** These tests are designed to run in CI with secrets configured, not locally.
+**Note:** These tests are designed to run in CI with secrets configured, not
+locally.
 
 ---
 
@@ -152,6 +165,7 @@ npm test -- --update-snapshots
 - "should filter submissions by status"
 
 **Fix Required:**
+
 ```html
 <!-- Add to gallery markup: -->
 <div data-testid="gallery-grid">
@@ -167,11 +181,10 @@ npm test -- --update-snapshots
 **Test:** "featured projects section" visual snapshot
 
 **Fix Required:**
+
 ```html
 <!-- Add to homepage: -->
-<section data-component="featured-projects">
-  ...
-</section>
+<section data-component="featured-projects">...</section>
 ```
 
 ---
@@ -259,4 +272,5 @@ The critical fixes have been deployed. Tests should now:
 - ✅ Test heading hierarchy on correct page
 - ✅ Use valid regex syntax
 
-**Cookie consent fix** requires updating import statements in test files (see Next Steps).
+**Cookie consent fix** requires updating import statements in test files (see
+Next Steps).

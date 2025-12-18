@@ -5,7 +5,7 @@
 ## Summary
 
 - **Starting Point:** 24 failures, 27 passing
-- **Current Status:** 22 failures, 29 passing  
+- **Current Status:** 22 failures, 29 passing
 - **Progress:** ✅ 2 more tests passing (8% improvement)
 
 ## Failure Breakdown
@@ -19,25 +19,30 @@
 [chromium] › tests/workflow.spec.ts:147:3 › should filter submissions by status
 ```
 
-**Root Cause:**  
+**Root Cause:**
 
-- Current fixture uses `page.addInitScript()` which only runs on initial page load
+- Current fixture uses `page.addInitScript()` which only runs on initial page
+  load
 - When tests navigate to new pages (e.g., `/showcase`), localStorage is not set
 - Cookie banner reappears and blocks interactions
 
-**Solution:**  
+**Solution:**
+
 ```typescript
 // Change from page.addInitScript() to context.addInitScript()
 export const test = base.extend({
   context: async ({ context }, use) => {
     await context.addInitScript(() => {
       localStorage.setItem("cookieConsent", JSON.stringify(true));
-      localStorage.setItem("cookiePreferences", JSON.stringify({
-        essential: true,
-        analytics: true,
-        marketing: false,
-        functional: true,
-      }));
+      localStorage.setItem(
+        "cookiePreferences",
+        JSON.stringify({
+          essential: true,
+          analytics: true,
+          marketing: false,
+          functional: true,
+        })
+      );
     });
     await use(context);
   },
@@ -61,7 +66,8 @@ export const test = base.extend({
 [chromium] › tests/visual/pages.spec.ts:14 › blog page renders correctly
 ```
 
-**Solution:**  
+**Solution:**
+
 ```bash
 npx playwright test --update-snapshots
 git add tests/visual/**/*.png
@@ -101,12 +107,14 @@ git commit -m "chore: Update visual regression baselines"
 **Solutions:**
 
 **Option A: Use Netlify Dev (Recommended)**
+
 ```bash
 npm install -g netlify-cli
 netlify dev --port=8765
 ```
 
 Update `playwright.config.ts`:
+
 ```typescript
 webServer: {
   command: 'netlify dev --port=8765',
@@ -116,17 +124,19 @@ webServer: {
 ```
 
 **Option B: Mock API Responses**
+
 ```typescript
-await page.route('/.netlify/functions/**', route => {
+await page.route("/.netlify/functions/**", (route) => {
   route.fulfill({
     status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify({ success: true, confirmationNumber: 'TEST-123' })
+    contentType: "application/json",
+    body: JSON.stringify({ success: true, confirmationNumber: "TEST-123" }),
   });
 });
 ```
 
 **Required Environment Variables:**
+
 ```bash
 # Create .env file
 AIRTABLE_API_TOKEN=your_token_here
@@ -148,11 +158,14 @@ DISCORD_WEBHOOK_SUBMISSIONS=https://discord.com/api/webhooks/...
 ```
 
 **Root Cause:**  
-Test expects filter buttons with `data-testid="filter-button"` but blog gallery page doesn't have filtering functionality (it's a static showcase of 3 design systems).
+Test expects filter buttons with `data-testid="filter-button"` but blog gallery
+page doesn't have filtering functionality (it's a static showcase of 3 design
+systems).
 
 **Solution:**
 
 **Option A: Skip these tests** (gallery is static, not dynamic)
+
 ```typescript
 test.skip("should filter submissions by status", async ({ page }) => {
   // This test doesn't apply to static gallery page
@@ -160,6 +173,7 @@ test.skip("should filter submissions by status", async ({ page }) => {
 ```
 
 **Option B: Add filter UI** (if dynamic filtering is planned)
+
 ```html
 <!-- Add to src/blog/index.njk -->
 <div class="filter-controls">
@@ -187,10 +201,14 @@ Line 199 has malformed selector combining text and attribute:
 
 ```typescript
 // WRONG:
-const successMessage = page.locator('text="Thank you", [data-testid="success-message"]');
+const successMessage = page.locator(
+  'text="Thank you", [data-testid="success-message"]'
+);
 
 // CORRECT:
-const successMessage = page.locator('[data-testid="success-message"]:has-text("Thank you")');
+const successMessage = page.locator(
+  '[data-testid="success-message"]:has-text("Thank you")'
+);
 // OR:
 const successMessage = page.locator('[data-testid="success-message"]');
 await expect(successMessage).toContainText("Thank you");
@@ -215,6 +233,7 @@ Received: "Style Guide Submission"
 
 **Solution:**  
 Update line 52:
+
 ```typescript
 // WRONG:
 await expect(page.locator("h1")).toContainText("Submit");

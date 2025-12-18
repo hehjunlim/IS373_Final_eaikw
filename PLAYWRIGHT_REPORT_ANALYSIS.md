@@ -10,11 +10,14 @@
 
 ### **Root Cause**
 
-Tests are running against **Eleventy static server** (`localhost:8765`) which doesn't serve Netlify Functions. The serverless functions live at `/.netlify/functions/*` endpoints that only exist when running `netlify dev`.
+Tests are running against **Eleventy static server** (`localhost:8765`) which
+doesn't serve Netlify Functions. The serverless functions live at
+`/.netlify/functions/*` endpoints that only exist when running `netlify dev`.
 
 ### **Impact**
 
-- Event registration tests failing: Form expects JSON response, receives HTML 404/error page
+- Event registration tests failing: Form expects JSON response, receives HTML
+  404/error page
 - API endpoint tests fail with connection refused
 - Integration tests can't reach serverless functions
 
@@ -38,14 +41,18 @@ This occurs because:
 
 **Files:** `tests/workflow.spec.ts` - "Event Registration Workflow"
 
-**Issue:** Form posts to `.netlify/functions/register-event` which doesn't exist on static server
+**Issue:** Form posts to `.netlify/functions/register-event` which doesn't exist
+on static server
 
 **Evidence from report:**
+
 ```yaml
-- generic [ref=e24]: "❌ Error: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+- generic [ref=e24]:
+    '❌ Error: Unexpected token ''<'', "<!DOCTYPE "... is not valid JSON'
 ```
 
 **Form code:**
+
 ```javascript
 const response = await fetch("/.netlify/functions/register-event", {
   method: "POST",
@@ -67,11 +74,13 @@ const data = await response.json(); // ← Tries to parse HTML as JSON
 - Filter button test: 5.5-second timeout (cookie banner intercepts)
 
 **Current test imports:**
+
 ```javascript
 import { test, expect } from "@playwright/test"; // ❌ Not using fixtures
 ```
 
 **Should be:**
+
 ```javascript
 import { test, expect } from "./fixtures"; // ✅ Uses cookie auto-dismiss
 ```
@@ -83,15 +92,17 @@ import { test, expect } from "./fixtures"; // ✅ Uses cookie auto-dismiss
 - "should display approved submissions in gallery"
 - "should filter submissions by status"
 
-**Issue:** Tests look for `[data-testid="gallery-grid"]` which doesn't exist in HTML
+**Issue:** Tests look for `[data-testid="gallery-grid"]` which doesn't exist in
+HTML
 
 **Page structure from report:**
+
 ```yaml
 - main:
-  - generic: # ← Missing data-testid="gallery-grid"
-    - paragraph: "03 — STYLE GALLERY"
-    - heading "Style Gallery"
-    - article: # ← Missing data-testid="submission-card"
+    - generic: # ← Missing data-testid="gallery-grid"
+        - paragraph: "03 — STYLE GALLERY"
+        - heading "Style Gallery"
+        - article: # ← Missing data-testid="submission-card"
 ```
 
 ---
@@ -117,11 +128,11 @@ webServer: {
 ```typescript
 // tests/setup.ts
 beforeEach(async ({ page }) => {
-  await page.route('**/.netlify/functions/**', route => {
+  await page.route("**/.netlify/functions/**", (route) => {
     // Return mock responses
-    route.fulfill({ 
+    route.fulfill({
       status: 200,
-      body: JSON.stringify({ success: true, registrationNumber: 'TEST-12345' })
+      body: JSON.stringify({ success: true, registrationNumber: "TEST-12345" }),
     });
   });
 });
@@ -147,12 +158,14 @@ tests/workflow.spec.ts
 ```
 
 Change:
+
 ```javascript
 - import { test, expect } from "@playwright/test";
 + import { test, expect } from "./fixtures";
 ```
 
 For nested test files, adjust path:
+
 ```javascript
 // For tests/visual/*.spec.ts
 import { test, expect } from "../fixtures";
@@ -171,9 +184,7 @@ import { test, expect } from "../fixtures";
 <!-- Find the gallery container -->
 <div data-testid="gallery-grid" class="gallery-grid">
   <!-- Cards -->
-  <article data-testid="submission-card">
-    ...
-  </article>
+  <article data-testid="submission-card">...</article>
 </div>
 ```
 
