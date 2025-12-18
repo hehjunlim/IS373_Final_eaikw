@@ -43,6 +43,11 @@ export default [
     ignores: [
       "_site/**",
       "node_modules/**",
+      "playwright-report-analysis/**",
+      "test-results/**",
+      "playwright-report/**",
+      "dist/**",
+      "build/**",
       "*.bundle.js",
       "*.min.js",
       "eaikw-cms/**",
